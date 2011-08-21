@@ -1,0 +1,8 @@
+%_topdir	.
+%_sourcedir	%{_topdir}
+%_specdir	%{_topdir}/rpm
+%_packager	$LOGNAME
+%_distribution	pyca
+%_rpmdir	%{_topdir}/rpm
+%_srcrpmdir	%{_topdir}/rpm
+%_builddir	%{_topdir}
