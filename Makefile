@@ -1,4 +1,5 @@
 
+SOURCESDIR=../pyca-20031118
 INSTALLDIR=dest/pyca-root
 
 DIRS=/etc/pyca \
@@ -23,34 +24,33 @@ startinstalling:
 	echo 'Installing'
 
 install: startinstalling mkdirs copyfiles doconfig
-	echo 'Done installing'
+	@echo 'Done installing'
 
 startcopying:
-	echo 'Copying files'
+	@echo 'Copying files'
 
 copyfiles: startcopying copyweb copybin copydoc copylib copyconf
-	echo 'Done copying'
+	@echo 'Done copying'
 
 copyweb: mkdirs
-	cp -rf cgi-bin/* ${INSTALLDIR}/usr/share/pyca
+	cp -rf ${SOURCESDIR}/cgi-bin/* ${INSTALLDIR}/usr/share/pyca
 
 copybin: mkdirs
-	cp -rf bin/* ${INSTALLDIR}/usr/bin
-	cp -rf sbin/* ${INSTALLDIR}/usr/sbin
+	cp -rf ${SOURCESDIR}/bin/* ${INSTALLDIR}/usr/bin
+	cp -rf ${SOURCESDIR}/sbin/* ${INSTALLDIR}/usr/sbin
 
 copydoc: mkdirs
-	-cp -rf doc/* ${INSTALLDIR}/usr/share/doc/pyca
-	cp -rf htdocs ${INSTALLDIR}/usr/share/doc/pyca
-	cp -rf help ${INSTALLDIR}/usr/share/pyca
+	-cp -rf ${SOURCESDIR}/doc/* ${INSTALLDIR}/usr/share/doc/pyca
+	cp -rf ${SOURCESDIR}/htdocs ${INSTALLDIR}/usr/share/doc/pyca
+	cp -rf ${SOURCESDIR}/help ${INSTALLDIR}/usr/share/pyca
 
 copylib: mkdirs
-	cp -rf pylib/* ${INSTALLDIR}/usr/lib/python2.4/site-packages/pycalib
+	cp -rf ${SOURCESDIR}/pylib/* ${INSTALLDIR}/usr/lib/python2.4/site-packages/pycalib
 
 copyconf: mkdirs
-	cp -rf conf/* ${INSTALLDIR}/etc/pyca
+	cp -rf ${SOURCESDIR}/conf/* ${INSTALLDIR}/etc/pyca
 
 doconfig:
 	echo "sljlkd" > ${INSTALLDIR}/etc/httpd/conf.d/pyca
 	echo "kjhkh" > ${INSTALLDIR}/etc/cron.hourly/pyca
-	echo Updating config.
 
