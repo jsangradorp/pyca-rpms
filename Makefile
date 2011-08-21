@@ -8,7 +8,7 @@ DIRS=/etc/pyca \
      /usr/share/doc \
      /usr/bin \
      /usr/sbin \
-     /usr/lib/python2.4/site-packages/pycalib \
+     /usr/local/pyca/pylib \
      /usr/share/pyca \
      /usr/share/doc/pyca \
      /var/lib/pyca/certs \
@@ -45,12 +45,25 @@ copydoc: mkdirs
 	cp -rf ${SOURCESDIR}/help ${INSTALLDIR}/usr/share/pyca
 
 copylib: mkdirs
-	cp -rf ${SOURCESDIR}/pylib/* ${INSTALLDIR}/usr/lib/python2.4/site-packages/pycalib
+	cp -rf ${SOURCESDIR}/pylib/* ${INSTALLDIR}/usr/local/pyca/pylib
 
 copyconf: mkdirs
 	cp -rf ${SOURCESDIR}/conf/* ${INSTALLDIR}/etc/pyca
 
 doconfig:
-	echo "sljlkd" > ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	echo "kjhkh" > ${INSTALLDIR}/etc/cron.hourly/pyca
+	# First apache config
+	echo 'ScriptAlias /pyca /usr/share/pyca' > ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	#echo '<Directory "/var/www/cgi-bin">' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	#echo '	AllowOverride None' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	#echo '	Options None' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	#echo '	Order allow,deny' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	#echo '	Allow from all' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	#echo '</Directory>' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	# Now cron config
+	echo "ca-cycle-priv.py" >> ${INSTALLDIR}/etc/cron.hourly/pyca
+	echo "ca-cycle-pub.py" >> ${INSTALLDIR}/etc/cron.hourly/pyca
+	# And fix pyca config itself
+	sed -i -e 's,/etc/openssl,/etc/pyca,g' ${INSTALLDIR}/usr/share/pyca/pycacnf.py
+	# next is to avoid a nasty warning
+	sed -i -e '1i# vim: set fileencoding=latin-1 :' ${INSTALLDIR}/usr/local/pyca/pylib/openssl/cnf.py
 
