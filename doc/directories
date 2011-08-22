@@ -1,0 +1,23 @@
+
+/etc/pyca/[configs] <-- configuration
+/etc/httpd/conf.d/pyca <-- web configuration
+[/etc/cron.hourly/pyca <-- ? ca-cycle]
+/usr/bin/[executables] <-- executables
+/usr/sbin/[root executables] <-- root executables
+/usr/share/pyca <-- web
+/usr/share/doc/pyca-XXXXX <-- documentation
+[/var/lib/pyca/certs <-- ?]
+/usr/lib/python2.4/site-packages/pycalib <-- library
+[or perhaps /usr/local/pyca/pylib ... ]
+
+
+
+user caadmin [caadmin] <-- manage CAs
+user MailDaemon [daemon] <-- receive and process requests
+user wwwUser <-- user running the web server
+ErrorLog <-- Log File instead of common apache log
+
+Require MTA
+
+
+
