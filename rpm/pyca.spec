@@ -6,9 +6,9 @@
 #%define __spec_install_post /usr/lib/rpm/brp-compress
 Summary: PyCA
 Name: pyca
-Version: 1
+Version: 20031118
 
-Release: 20031118
+Release: 1
 License: GPL2
 Group: System Utilities
 URL: http://www.pyca.de
@@ -50,6 +50,7 @@ make DESTDIR=%{pyca} INSTALLROOT=$RPM_BUILD_ROOT%{pyca} install
 %{pyca}/usr/sbin/ca-make.py
 %{pyca}/usr/sbin/ca-revoke.py
 %{pyca}/usr/sbin/pickle-cnf.py
+%{pyca}/usr/sbin/new-ca.sh
 %defattr(-,apache,root)
 %{pyca}/usr/share/pyca/browser-check.py
 %{pyca}/usr/share/pyca/ca-index.py
@@ -95,3 +96,8 @@ make DESTDIR=%{pyca} INSTALLROOT=$RPM_BUILD_ROOT%{pyca} install
 %{pyca}/usr/share/doc/pyca/htdocs/ssi/footer.html
 %{pyca}/usr/share/doc/pyca/htdocs/ssi/head.html
 %{pyca}/usr/share/doc/pyca/htdocs/ssi/navigation.html
+
+%post
+if ! grep -q caadmin: /etc/passwd ; then useradd -m caadmin ; else echo "User caadmin already exists. Skipping creation" ; fi
+echo "Now you can run new-ca.sh script"
+

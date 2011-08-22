@@ -30,6 +30,7 @@ startcopying:
 	@echo 'Copying files'
 
 copyfiles: startcopying copyweb copybin copydoc copylib copyconf
+	cp scripts/new-ca.sh ${INSTALLDIR}/usr/sbin
 	@echo 'Done copying'
 
 copyweb: mkdirs
@@ -53,17 +54,15 @@ copyconf: mkdirs
 doconfig:
 	# First apache config
 	echo 'ScriptAlias /pyca /usr/share/pyca' > ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	#echo '<Directory "/var/www/cgi-bin">' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	#echo '	AllowOverride None' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	#echo '	Options None' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	#echo '	Order allow,deny' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	#echo '	Allow from all' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
-	#echo '</Directory>' >> ${INSTALLDIR}/etc/httpd/conf.d/pyca
 	# Now cron config
-	echo "ca-cycle-priv.py" >> ${INSTALLDIR}/etc/cron.hourly/pyca
-	echo "ca-cycle-pub.py" >> ${INSTALLDIR}/etc/cron.hourly/pyca
+	echo "ca-cycle-priv.py --config=/etc/pyca/openssl.cnf" > ${INSTALLDIR}/etc/cron.hourly/pyca
+	echo "ca-cycle-pub.py --config=/etc/pyca/openssl.cnf" >> ${INSTALLDIR}/etc/cron.hourly/pyca
 	# And fix pyca config itself
 	sed -i -e 's,/etc/openssl,/etc/pyca,g' ${INSTALLDIR}/usr/share/pyca/pycacnf.py
 	# next is to avoid a nasty warning
 	sed -i -e '1i# vim: set fileencoding=latin-1 :' ${INSTALLDIR}/usr/local/pyca/pylib/openssl/cnf.py
+	# and configure
+	sed -i -e 's,/etc/openssl,/etc/pyca,g' ${INSTALLDIR}/etc/pyca/openssl.cnf
+	sed -i -e 's,/usr/local,/var/lib/pyca,g' ${INSTALLDIR}/etc/pyca/openssl.cnf
+	sed -i -e 's,\(userWWWRun *= *\)wwwrun,\1apache,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 
