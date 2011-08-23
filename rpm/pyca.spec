@@ -99,5 +99,7 @@ make DESTDIR=%{pyca} INSTALLROOT=$RPM_BUILD_ROOT%{pyca} install
 
 %post
 if ! grep -q caadmin: /etc/passwd ; then useradd -m caadmin ; else echo "User caadmin already exists. Skipping creation" ; fi
+mkdir -p /var/lib/pyca/
+chown apache /var/lib/pyca
 echo "Now you can run new-ca.sh script"
 
