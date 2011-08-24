@@ -1,0 +1,295 @@
+<HTML>
+<HEAD>
+ <TITLE>SSL Certificates - User help</TITLE>
+
+  <META NAME="AUTHOR" CONTENT="www@ms.inka.de">
+  <META NAME="ROBOTS" CONTENT="NOINDEX,NOFOLLOW">
+
+</HEAD>
+
+<BODY TEXT="#000000" LINK="Red" VLINK="Green" BGCOLOR="#FFFFFF">
+
+<CENTER>
+<P>
+<h1>SSL Certificates</H1>
+<H2>What are they and how to create them here</H2>
+</CENTER>
+</P>
+
+<P>
+Most web traffic is sent unencrypted.  That is, anyone with
+access to the right tools can view most of the traffic that travels the Web. 
+In some circumstances this can be undesirable, such as in credit card and
+bank transactions.
+</P>
+<P>
+Where greater web data security is needed, the <B>S</B>ecure <B>S</B>ocket
+ <B>L</B>ayer (SSL) is used to encrypt the data stream between the server
+ and the client (usually a web browser).  
+</P>
+<P>
+If it is true that SSL securely encrypts data travelling over the Internet,
+ then why is a certificate necessary? 
+</P>
+<P>
+ The simple answer is that it is NOT!
+</P>
+<P>
+However, certificates are still useful:
+ A certificate, signed by a trusted <I>Certificate Authority</I> (CA), is 
+ designed to ensure that the certificate holder is really who they claim to be.   Without a trusted, signed certificate, your data may still
+ be encrypted but you can't be sure who you are communicating with.
+</P>
+<P>
+If you need a certificate then keep reading and find out more below.
+<P>
+<hr>
+
+<P>
+<h2>Specifications for certificate requests</h2>
+</P>
+
+<P>
+<a name="countryName" >
+<h3>Country Code (ISO designation of the country)</h3></a>
+ Enter the ISO short-name (2 letter) country ID here.
+<h4>Valid inputs:</h4>
+Enter two uppercase letters. Special characters (e.g. umlauts),
+ digits and other special characters are disallowed and will result in an error message.
+</P>
+<P>
+<dl>
+  <dt><h4> Examples:</h4><P>
+  <dl>
+    <dt> ' AU ' for Australia
+    <dt> ' US ' for U.S.A.
+</dl>
+</dl>
+
+<hr>
+
+<a name="stateOrProvinceName" ><h3>State or Province</h3></a>
+ Full official name of the region, state or province.
+
+<h4>Valid inputs:</h4>
+Alphanumeric characters (letters, country-specific
+letters and digits). Some additional special characters ('.', ' _ ', ' - '
+and the blank) are allowed. NB: semicolon and some others are disallowed.
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' New South Wales '
+    <dt> ' new jersey '
+    <dt> ' Germany;  Bathe ' results in error message because of semicolon
+</dl>
+</dl>
+
+<hr>
+
+<a name="localityName" ><h3>City or Locality(LN)</h3></a>
+<h4>Valid inputs:</h4>
+Alphanumeric characters (letters, country-specific
+letters and digits) and some special characters ('.', ' _ ', ' - '
+and the blank) are allowed (NB: semicolon and some others are disallowed).
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' Sydney ' 
+    <dt> ' Washington D.C. ' 
+    <dt> ' Frankfurt a.d.  Or ' 
+    <dt> ' Frankfurt/Oder ' results in error message because of diagonal stroke
+</dl>
+</dl>
+
+<hr>
+
+<a name="organizationName" ><h3>Name of Organisation</h3></a>
+ Name of the organisation (e.g. company, national authority,
+association etc..)
+<h4>Valid inputs:</h4>
+Alphanumeric characters (letters, country-specific
+letters and digits) and certain special characters ('.', ' _ ', ' - '
+and the blank) are allowed (NB: semicolon and some others are disallowed).
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' Microshaft Inc. ' is permitted 
+    <dt> ' Karneval /Stimmungsverein ' results in error message because of
+diagonal stroke
+</dl>
+</dl>
+
+<hr>
+
+<a name="organizationalUnitName" ><h3>Department or Organisational Unit</h3></a>
+<h4>Valid inputs</h4>
+Alphanumeric characters (letters, country-specific
+letters and digits) and certain special characters ('.', ' _ ', ' - '
+and the blank) are allowed (NB: semicolon and some others are disallowed).
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' IT Department '
+    <dt> ' Network Services Division '
+    <dt> ' information &amp; communication ' results in error
+message because of &amp; (Ampersand) <dt> ' Abbott 08/15 '
+results in error message because of diagonal stroke
+</dl>
+</dl>
+
+<hr>
+
+<a name="commonName" ><h3>Common Name</h3></a>
+If you are registering a certificate for a server, then the <B>Common
+ Name</B> MUST be the fully qualified domain name of that server.
+<P>
+Otherwise....
+<P>
+If the certificate is for electronic mail or client identity, the
+<B>Common Name</B> is usually the
+first name and surname of a person (your own name!).
+<h4>Valid inputs</h4>
+Alphanumeric characters (letters, country-specific
+letters and digits) and certain special characters ('.', ' _ ', ' - '
+and the blank) are allowed (NB: semicolon and some others are disallowed).
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> '  www.secure.site.com' is a valid name for a server certificate.
+    <dt> ' Elvis Presley ' is a valid name for a client certificate.
+    <dt> ' Elvis, the large one ' results in error message because of the
+ comma (irrespective of the bad grammar; -)
+</dl>
+</dl>
+
+<hr>
+
+<a name="initials" ><h2>Initials</h2></a>
+ If your organization commonly uses a name contraction (for example, MS
+ instead of Microsoft), then enter this here please. This may also be
+the well known initials of a person - e.g. <I>HRH</I> or <I>FUBAR</I>
+<h4>Valid inputs</h4>
+ Enter up to a maximum of five (5) alphanumeric characters (letters,
+country-specific letters and digits).
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' KL ' is a valid specification 
+    <dt> ' a-dG ' results in error message because of the hyphen
+</dl>
+</dl>
+
+<hr>
+
+<a name="emailAddress" ><h3>E-mail Address</h3></a>
+<B>NB:</B> You MUST enter a valid E-Mail address. 
+This certificate request will fail unless a valid email address is entered.
+The E-Mail address is checked  for plausibility before the request is processed.
+<h4>Valid inputs</h4>
+ All characters which are likely to be found in a valid email address
+are permitted.
+This includes are letters
+and special special characters ('@', '. ',  ' = ', ' / ', ' - ', ' _ '
+and the blank), but excluding country-specific characters such as umlaut.
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' michael@badexaple.com.au ' Won't work - it's not a registered domain name
+    <dt> ' ben.venudo@to.no.where ' results in error message because of invalid Internet domain
+</dl>
+</dl>
+
+<hr>
+
+<a name="fax" ></a>
+<a name="phone" ><h3> Telephone and FAX Numbers</h3></a>
+For more exact identification, the specification
+of telephone and FAX numbers is sometimes helpful.  This information
+is <b>not required</B>, and <B>even if entered here, it will not be
+ published</B>.
+
+<h4>Valid inputs:</h4>
+Plus sign and numbers only.  The numbers must be entered in standard
+ international telephone number format (or an error message will be generated).
+<BR>
+<dl>
+  <dt> +[CountryCode] [AreaCode]  [LocalNumber]
+</dt>
+</dl>
+The <I>CountryCode</I> may consist only of 2 digits.
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' +49 7219 6506 ' is valid 
+    <dt> ' +41 7219/9650 ' is invalid because of diagonal stroke
+</dl>
+</dl>
+
+<hr>
+
+<a name="contactPerson" ><h3>Contact Person</h3></a>
+<h4>Valid inputs:</h4>
+The name of a contact person is sometimes helpful.
+Alphanumeric characters (letters, country-specific letters and digits) and 
+some special characters ('.', ' _ ', ' - ' and the blank) are allowed.
+<dl>
+  <dt><h4>Examples:</h4><P>
+  <dl>
+    <dt> ' Michael Stroeder ' is a valid entry 
+    <dt> ' Bernie, at reception ' is invalid because of the comma
+</dl>
+</dl>
+
+<hr>
+
+<a name="days" ><h3>Valid Number Of Days</h3></a>
+Enter the number of days from <b>now</b>, until the time
+this certificate will expire (e.g. valid for one year is 365 days!).
+The actual validity period is usually fixed by the Certification Authority
+as a matter of Policy </a>.
+
+
+<hr>
+
+<a name="challenge" ><h3>Challenge Password</h3></a>
+This is the <I>Challenge Secret</I> or <I>Initial Master Secret</I> password.
+This is a password, which you have choose to use for communication with  
+with the certification body.  This is not always required but
+it does provide additional protection.
+<hr>
+
+<a name="userpassword" ><h3>User Password</h3></a>
+This is an optional password  which you use to manage your certificate.
+ This password protects against non-authorized recall of the certificate
+ by third parties.  This password is not displayed during input.  In order to
+check for typing errors, the password must be input twice.
+<hr>
+
+<a name="SPKAC" ><h3>RSA Key length</h3></a>
+Enter the length of the RSA code. The RSA code is NOT the same as the
+certificate: The RSA key is used by some browsers  when transmitting a
+ certificate request to the server.
+
+
+<h4> Note: </h4>
+It is usually advisable to select the longest key available (usually 1024 bits).
+<p>
+<p>
+ The actual key length may depend on the browser version.
+<br>
+ Because of U.S. regulations, some versions of
+ Netscape  navigator can only use RSA code with a maximum of 512 bits.
+Please visit these links for more information: 
+www.fortify.net <a href="http://babel.altavista.com/translate.dyn?lp=de_en&doit=done&url=http%3A%2F%2Fwww.fortify.net" > is worthwhile anyhow, </a> and also <a href="ftp://ftp.replay.com/pub/crypto/browsers/" >
+ftp.replay.com </a>.
+
+
+<h4>Valid inputs:</h4>
+Enter the key length  (number of bits) used by the browser.
+For RSA code, possible values are 512 bits, 768 bits and 1024 bits.
+<P>
+Some types of certificates have a fixed minimum length.
+Please consult the local CA Policy documents for further information</a>.
+</body>
+</html>
+

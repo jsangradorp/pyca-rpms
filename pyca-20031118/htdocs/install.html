@@ -1,0 +1,141 @@
+<!--#set var="pyca_subtitle" value="Installing"-->
+<!--#set var="pyca_pagedescription" value="A brief description on how to install it"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+
+<h2><A NAME="Requirements">Requirements</A></h2>
+<p>
+  For running these scripts you need:
+</p>
+<ul>
+  <li>
+    A Unix-like operating system (e.g. Linux, I would like to hear reports
+    of pyCA running on other systems).
+  </li>
+  <li>
+    <A HREF="http://www.openssl.org/">OpenSSL 0.9.4+</A>
+  </li>
+</ul>
+
+<p>
+  For running the CGI-BIN programs you need:
+</p>
+<ul>
+  <li>
+    Web server with CGI-BIN support, e.g.
+    <A HREF="http://www.apache.org/">Apache</A> or preferrably a web server
+    with SSL support like <A HREF="http://www.apache-ssl.org/">ApacheSSL</A>
+    or Apache with <A HREF="http://www.modssl.org/">mod_ssl</A>.
+  </li>
+  <li>
+    One of the following web browsers:
+    <ul>
+      <li>
+	<A HREF="http://www.netscape.com/">Netscape Navigator</A> or
+	<A HREF="http://www.opera.com/">Opera</A><br />
+	using the &lt;KEYGEN&gt;-tag for the
+	<A HREF="http://www1.netscape.com/eng/security/comm4-keygen.html">asymmetric
+	key generation</A>
+      </li>
+      <li>
+	Microsoft Internet Explorer 4 or above
+	(IE 3 will be <STRONG>not</STRONG> supported)
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>
+  For using LDAP as a certificates repository you need:
+</p>
+<ul>
+  <li>
+    LDAP Server (e.g. <A HREF="http://www.openldap.org/">OpenLDAP</A>)
+    configured to store certificate attributes
+  </li>
+  <li>
+    <A HREF="http://python-ldap.sourceforge.net">
+    python-ldap</A> which needs
+    <A HREF="http://www.openldap.org/">OpenLDAP</A> to build
+  </li>
+</ul>
+
+<p>
+  Ready-to-use packages of the required software in current Linux distributions:
+</p>
+<ul>
+  <li>
+    The Linux distribution <A HREF="http://www.suse.de/">S.u.S.E.</A>
+    already has RPM packages of Python, OpenSSL, Apache with mod_ssl,
+    Netscape Navigator, OpenLDAP and ldapmodule (since 6.2) for Python.
+  </li>
+  <li>
+    <A HREF="http://www.redhat.com/">Red Hat</A> has included the Python
+    interpreter with their Linux distribution. You might consider to grab some
+    <A HREF="http://www.webideal.de/ldap/">pre-packaged RPMs</A> of OpenLDAP and
+    ldapmodule.
+  </li>
+  <li>
+    There is a <a href="http://packages.debian.org/unstable/net/pyca.html">
+    Debian package of pyCA</a> itself.
+    The <a href="http://www.debian.org/">Debian</a>-Release
+    (nickname Potato) includes packages of OpenSSL, Python, OpenLDAP and
+    ldapmodule for Python as well as ApacheSSL and Apache with mod_ssl.
+  </li>
+</ul>
+
+<h2><A NAME="Docs">Documentation</A></h2>
+<p>
+  Some rudimental documentation is available and included in the
+  download archive above.
+</p>
+<ul>
+  <li>
+    <A HREF="overview.html">Architecural overview</A>
+  </li>
+  <li>
+    <A HREF="files.html">List of files</A>
+  </li>
+  <li>
+    <A HREF="config.html">Configuration</A>
+  </li>
+  <li>
+    <A HREF="changes.html">Release history</A>
+  </li>
+  <li>
+    <A HREF="roadmap.html">Roadmap - plans for enhancing pyCA</A>
+  </li>
+  <li>
+    <A HREF="conf/openssl.cnf">Example OpenSSL configuration file</A>
+  </li>
+</ul>
+
+<H3><A NAME="Installing">Installing</A></H3>
+<ul>
+  <li>
+    Install all <A HREF="#Requirements">required software</A>.
+  </li>
+  <li>
+    Put the Python programs under <EM>cgi-bin/</EM> anywhere
+    in the CGI-BIN directory of your web server.
+  </li>
+  <li>
+    Put the Python modules under <EM>pylib/</EM> anywhere in your Python path
+    or adjust the list variable <EM>pylib</EM> in <EM>pycacnf.py</EM>.
+  </li>
+  <li>
+    You have to set up a reasonable OpenSSL configuration file
+    <EM>openssl.cnf</EM> (<A HREF="config.html">see documentation</A>, <A HREF="conf/openssl.cnf">see example</A>)
+    and adjust variable <EM>cnf_filename</EM> in <EM>pycacnf.py</EM>.
+  </li>
+  <li>
+    You might want to create a CA hierarchy with <EM>ca-make.py</EM>.
+  </li>
+  <li>
+    call the CGI-BIN program <EM>ca-index</EM> to show some of the relevant
+    data in your OpenSSL configuration file.
+  </li>
+</ul>
+
+<!--#include file="ssi/footer.html"-->

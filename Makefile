@@ -1,5 +1,5 @@
 
-SOURCESDIR=../pyca-20031118
+SOURCESDIR=./pyca-20031118
 INSTALLDIR=dest/pyca-root
 
 DIRS=/etc/pyca \

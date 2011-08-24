@@ -1,0 +1,46 @@
+<!--#set var="pyca_subtitle" value="Related"-->
+<!--#set var="pyca_pagedescription" value="Links to resources of related work"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<h2>Related work</h2>
+<ul>
+  <li>
+    This work was started during my <a href="http://www.stroeder.com/DA/">diploma thesis</a>
+    which might be helpful for german readers to understand the architecture
+    and goals of <a href="http://www.pyca.de/">pyCA</a>.
+  </li>
+  <li>
+    If you're eager using LDAP as certificate repository 
+    you might also consider using <a href="http://www.web2ldap.de/">
+    web2ldap</a> for accessing your LDAP data via WWW.
+  </li>
+</ul>
+
+
+<h2>Apps</h2>
+What to do with client certificates? Here are some examples:
+<ul>
+  <li>
+    You can use client certs for strong user authentication
+    with SSL capable web servers, e.g.
+    <a href="http://www.apache-ssl.org/">ApacheSSL</a>
+    or Apache with <a href="http://www.modssl.org/">mod_ssl</a>.
+  </li>
+  <li>
+    You can use client certs for strong user authentication
+    with some SSL tunnels, e.g.
+    <a href="http://mike.daewoo.com.pl/computer/stunnel/">stunnel</a>.
+  </li>
+  <li>
+    Or how about some client-cert based mail-relaying rules
+    for the <a href="http://www.postfix.org/">postfix-MTA</a> patched
+    with <a href="http://www.aet.tu-cottbus.de/personen/jaenicke/pfixtls/">
+    Postfix/TLS</a>? Quite helpful for your mobile users!
+  </li>
+  <li>
+    <a href="http://developer.netscape.com/tech/security/formsign/formsign.html">Signed forms</a>
+  </li>
+</ul>
+
+<!--#include file="ssi/footer.html"-->

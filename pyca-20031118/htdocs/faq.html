@@ -1,0 +1,101 @@
+<!--#set var="pyca_subtitle" value="FAQ"-->
+<!--#set var="pyca_pagedescription" value="Frequently Asked Questions"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<dl>
+
+  <dt>
+    I have successfully created a certificate request.
+    The file with suffix .spkac or .pem was stored in directory $dir/newreqs.
+    How to issue the certificate?
+  </dt>
+  <dd>
+    <p>
+      You have to issue the cert manually by invoking &quot;openssl ca&quot;
+      command.
+    </p>
+    <p>
+      Cert request created with Netscape or Opera:
+    </p>
+    <p><code>
+      openssl ca -name [name of CA section] -spkac [pathname of CSR.spkac]
+    </code></p>
+    <p>
+      Cert request created with M$ IE:
+    </p>
+    <p><code>
+      openssl ca -name [name of CA section] -in [pathname of CSR.pem]
+    </code></p>
+    <p>
+      This creates the certificate and stores it into newcerts/ as file
+      [serial].pem.
+      Call <a href="files.html#ca-cycle-pub.py">ca-cycle-pub.py</a>
+      afterwards and receive e-mail...
+    </p>
+  </dd>
+
+  <dt>
+    Do I need LDAP for deploying pyCA?
+  </dt>
+  <dd>
+    No. pyCA supports uploading certificates to a LDAP server
+    but all data needed is stored in the directory structure
+    in your file system.
+  </dd>
+
+  <dt>
+    How can I store the issued end-entity certificates on a LDAP host?
+  </dt>
+  <dd>
+    Mainly the certificates will be <em>replicated</em> by
+    <a href="files.html#certs2ldap.py">certs2ldap.py</a> to a
+    LDAP server by searching existing entries and adding the DER-encoded
+    certificate into attribute <em>userCertificate;binary</em>. Expired
+    certificates may be deleted (use carefully!).<br />
+    New LDAP entries will not be created because most times the LDAP
+    directory structure differs from the cert DN structure. It is 
+    up to your LDAP admin to create entries for the end entities.
+  </dd>
+
+  <dt>
+    How can I store the CA certificates and CRLs on a LDAP host?
+  </dt>
+  <dd>
+    <a href="files.html#ca2ldif.py">ca2ldif.py</a> can create a LDIF
+    file of you CA cert hierarchy which you can upload to the LDAP
+    server using the usual tools shipped with your LDAP server software.<br />
+    Currently the CRLs are not updated on a regular basis.
+  </dd>
+
+  <dt>
+    It seems that during parsing the lines of openssl.cnf an
+    exception is raised. Why is that happening?
+  </dt>
+  <dd>
+    Please check that the attribute values of single-valued configuration
+    attributes do not contain a comma. A comma is used if a configuration
+    attribute may have multiple values which are delimited by comma.
+    (Frankly the openssl.cnf syntax and my parser suck both.
+    I wouldn't use openssl.cnf for configuration today anymore.)
+  </dd>
+
+  <dt>
+  </dt>
+  <dd>
+  </dd>
+
+  <dt>
+  </dt>
+  <dd>
+  </dd>
+
+  <dt>
+  </dt>
+  <dd>
+  </dd>
+
+</dl>
+
+
+<!--#include file="ssi/footer.html"-->

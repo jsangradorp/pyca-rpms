@@ -1,0 +1,715 @@
+<!--#set var="pyca_subtitle" value="Configuration"-->
+<!--#set var="pyca_pagedescription" value="Options in OpenSSL config file"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<p>
+This document describes the parameters in the OpenSSL config file necessary for
+using pyCA.
+</p>
+
+<a name="Contents"><h2>Table of Contents</h2></a>
+<menu>
+  <li>
+    <A HREF="#pycacnf.py">Module pycacnf.py</a>
+  </li>
+  <li>
+    <A HREF="#openssl.cnf">OpenSSL configuration file (<em>openssl.cnf</em>)</a>
+    <MENU>
+      <li>
+	<A HREF="#openssl.cnf_pyca">Section [&nbsp;pyca&nbsp;]</a>
+      </li>
+      <li>
+	<A HREF="#openssl.cnf_CA">CA Sections</a>
+      </li>
+      <li>
+	<A HREF="#openssl.cnf_req">req Sections</a>
+      </li>
+      <li>
+	<A HREF="#openssl.cnf_policy">policy Sections</a>
+      </li>
+      <li>
+	<A HREF="#openssl.cnf_x509_extensions">x509_extensions Sections</a>
+      </li>
+      <li>
+	<A HREF="../conf/openssl.cnf">Example</a>
+      </li>
+    </menu>
+  </li>
+</menu>
+
+<h2><a name="Abstract">Abstract</a></h2>
+The goal of pyCA is to keep as much configuration data in
+OpenSSL's configuration file (most times called <em>openssl.cnf</em>)
+as possible because it is much easier to keep one file up-to-date
+and consistent. pyCA also tries to reduce administrative
+tasks and end-user's frustration by generating specific input forms for
+a certain CA definition (certificate type) to avoid users generating
+invalid certificate requests which does not fulfill the policy of a
+certificate authority.<p>
+Although a lot of parameters already known in OpenSSL are used it
+was necessary to add some new sections and attributes for reaching
+this goal. These extensions have nothing to do with the OpenSSL-package
+itself and hopefully will not conflict with new parameters introduced
+in OpenSSL.<p>
+
+<a name="pycacnf.py"><h2>Module pycacnf.py</h2></a>
+Although pyCA tries to get all configuration parameters from the
+OpenSSL config file there are two parameters which have to be configured
+in the Python module <A HREF="files.html#pycacnf.py">pycacnf.py</a> which has to be located together
+with the CGI-BIN programs and scripts or in the system's Python path:
+<ul>
+  <li>
+    The path of the OpenSSL's config file (e.g. /usr/local/ssl/lib/openssl.cnf)
+    is configured in the variable <em>cnf_filename</em>.
+  </li>
+  <li>
+    If you are not allowed to place Python modules in the system's Python path
+    you can list more directories containing modules in the list
+    variable <em>pylib</em>.<br />
+    Or simply set the environment variable <em>PYCALIB</em> to define
+    the name of the directory containing the modules.
+  </li>
+</ul>
+
+<h2><a name="openssl.cnf">OpenSSL configuration file</a></h2>
+pyCA tries to make use of as many parameters given in the
+OpenSSL configuration file as possible. Therefore you should
+set up all sections in a reasonable manner refering to OpenSSL's
+documentation. pyCA defines some additional parameters which are
+defined below. All parameter names are handled case-sensitive!
+
+<h3><a name="openssl.cnf_pickle">Pre-compilation</a></h3>
+You can create a pre-compiled binary copy of your configuration file
+by running <A HREF="files.html#pickle-cnf.py">pickle-cnf.py</a> to gain
+better performance.
+The pathname of the pre-compiled copy is always presumed to be <em>cnf_filename</em>
+with the suffix <em>.pickle</em>.
+The Python modules <em>cPickle</em> (if existent) or <em>pickle</em> are
+used for reading this pre-compiled copy. If this fails the source of
+the configuration file is read. You have to take care that the pre-compiled
+copy is up-to-date and reflects your actual configuration by running
+<A HREF="files.html#pickle-cnf.py">pickle-cnf.py</a> after every change of
+the source!
+
+<h3><a name="openssl.cnf_ca">Section [&nbsp;ca&nbsp;]</a></h3>
+The term <em>CA name</em> used in this document specifies the
+name of a CA definition in the section <A HREF="#openssl.cnf_ca">[&nbsp;ca&nbsp;]</a>.
+Each name of a CA has to be unique and points to a CA section which contains
+several parameters for this certain CA.
+
+<h3><a name="openssl.cnf_pyca">Section [&nbsp;pyca&nbsp;]</a></h3>
+Some parameters only used by pyCA are configured in an
+own proprietary section named [&nbsp;pyca&nbsp;].
+
+<H4><a name="files_and_dirs">Files and directories</a></H4>
+<dl>
+  <dt>
+    <a name="OpenSSLExec">OpenSSLExec</a>
+  </dt>
+  <dd>
+    Full pathname of the openssl executable (default /usr/local/ssl/bin/openssl).
+  </dd>
+  <dt>
+    <a name="CaFixExec">CaFixExec</a>
+  </dt>
+  <dd>
+    ignored since 0.5.3 - use the more
+    flexible <A HREF="#ca_x509_extfile">ca_x509_extfile</a> parameter
+  </dd>
+  <dt>
+    <a name="TmpDir">TmpDir</a>
+  </dt>
+  <dd>
+    Directory for temporary files (default /tmp).
+  </dd>
+  <dt>
+    <a name="caCertConfirmReqLog">caCertConfirmReqLog</a>
+  </dt>
+  <dd>
+    (since 0.6.6)<BR>
+    Path to file for log output of <A HREF="files.html#ca-certreq-mail.py">
+    ca-certreq-mail.py</a>. The directory must be writeable for the
+    user defined with parameter <A HREF="#userMailDaemon">userMailDaemon</a>.
+  </dd>
+  <dt>
+    <a name="caPendCertReqDir">caPendCertReqDir</a>
+  </dt>
+  <dd>
+    ignored since 0.5.0 - use the more
+    flexible <A HREF="#pend_reqs_dir">pend_reqs_dir</a> parameter</dd>
+  </dd>
+  <dt>
+    <a name="caNewCertReqDir">caNewCertReqDir</a>
+  </dt>
+  <dd>
+    ignored since 0.5.0 - use the more
+    flexible <A HREF="#new_reqs_dir">new_reqs_dir</a> parameter</dd>
+  </dd>
+  <dt>
+    <a name="userCAAdmin">userCAAdmin</a>
+  </dt>
+  <dd>
+    (since 0.5.4)<BR>
+    Existing username of the user maintaining the CA data.
+    Used for setting the ownership of various files and directories in
+    <A HREF="files.html#ca-make.py">ca-make.py</a>.
+    <BR>Example:<BR>
+    <CODE>
+      userCAAdmin = caadmin
+    </CODE>
+  </dd>
+  <dt>
+    <a name="userMailDaemon">userMailDaemon</a>
+  </dt>
+  <dd>
+    (since 0.5.4)<BR>
+    Existing username of the user running the mail delivery demon.
+    Used for setting the ownership of certificate request spool directories
+    <A HREF="#pend_reqs_dir">pend_reqs_dir</a> and <A HREF="#new_reqs_dir">new_reqs_dir</a>
+    in <A HREF="files.html#ca-make.py">ca-make.py</a>.
+    <BR>Example:<BR>
+    <CODE>
+    userMailDaemon = daemon
+    </CODE>
+  </dd>
+  <dt>
+    <a name="userWWWRun">userWWWRun</a>
+  </dt>
+  <dd>
+    (since 0.5.4)<BR>
+    Existing username of the user running the web server.
+    Used for setting the ownership of certificate request spool directories
+    <A HREF="#pend_reqs_dir">pend_reqs_dir</a> and <A HREF="#new_reqs_dir">new_reqs_dir</a>
+    in <A HREF="files.html#ca-make.py">ca-make.py</a>.
+    <BR>Example:<BR>
+    <CODE>
+    userWWWRun = wwwrun
+    </CODE>
+  </dd>
+  <dt>
+    <a name="ErrorLog">ErrorLog</a>
+  </dt>
+  <dd>
+    (since 0.5.3)<BR>
+    Normally errors are written to sys.stderr which is most times written
+    to the error log of the web server. You can redirect Python's sys.stderr
+    to an dedicated error log file by providing a pathname here which is handy
+    in situation where you do not have access to the web error logs.
+    Note that the file has to be writeable by the user the web server runs as
+    (see also <A HREF="#userWWWRun">userWWWRun</a>).
+  </dd>
+</dl>
+
+<H4><a name="Mail-Options">Mail-Options</a></H4>
+
+<dl>
+  <dt>
+    <a name="MailRelay">MailRelay</a>
+  </dt>
+  <dd>
+    The default SMTP mail relay.
+    <BR>Example:<BR><CODE>
+    MailRelay = mail.domain.my
+    </CODE>
+  </dd>
+  <dt>
+    <a name="caAdminMailAdr">caAdminMailAdr</a>
+  </dt>
+  <dd>
+    (since 0.6.2)<BR>
+    Mail address of the CA's administrator. Is used as default
+    address for some tasks in <A HREF="files.html#ca-cycle-pub.py">ca-cycle-pub.py</a>.
+  </dd>
+  <dt>
+    <a name="caCertReqMailAdr">caCertReqMailAdr</a>
+  </dt>
+  <dd>
+    Mail address of the mail dialogue script for certificate requests.
+    If empty, no mail dialogue is initiated.
+  </dd>
+</dl>
+
+<H4><a name="CA-Options">CA-Options</a></H4>
+<dl>
+
+  <dt>
+    <a name="caCertFormat">caCertFormat</a>
+  </dt>
+  <dd>
+    Ignored since 0.6.0!<BR>
+    Specified the format of all stored certificate data.
+    (nice idea but the code gets too messy...)
+  </dd>
+
+  <dt>
+    <a name="PreferDERCerts">PreferDERCerts</a>
+  </dt>
+  <dd>
+    ignored since 0.5.0
+  </dd>
+
+  <dt>
+    <a name="caPendCertReqValid">caPendCertReqValid</a>
+  </dt>
+  <dd>
+    Amount of time [h] how long a pending certificate request is stored
+    in <A HREF="#pend_reqs_dir">pend_reqs_dir</a> without being
+    confirmed by e-mail. Set to zero to disable automatic deletion
+    of stale certificate requests by <A HREF="files.html#ca-cycle-pub.py">ca-cycle-pub.py</a>.
+  </dd>
+
+  <dt>
+    <a name="caInternalCertTypes">caInternalCertTypes</a>
+  </dt>
+  <dd>
+    List CA names (see section <A HREF="#openssl.cnf_ca">[&nbsp;ca&nbsp;]</a> for which certificate
+    requests can only be created from an internal network
+    (see <A HREF="#caInternalIPAdr">caInternalIPAdr</a> and
+    <A HREF="#caInternalDomains">caInternalDomains</a>).<BR>
+    The integrity of your PKI should not rely on such mechanisms!<BR>
+    Example:<BR>
+    <CODE>
+      caInternalCertTypes = Member, Admin
+    </CODE>
+  </dd>
+
+  <dt>
+    <a name="caInternalIPAdr">caInternalIPAdr</a>
+  </dt>
+  <dd>
+    List of IP network addresses/-masks which are considered internal
+    (see <A HREF="#caInternalCertTypes">caInternalCertTypes</a>).<BR>
+    The integrity of your PKI should not rely on such mechanisms!
+    <BR>Example:<BR>
+    <CODE>
+      caInternalIPAdr = 127.0.0.0/255.0.0.0,10.0.0.0/255.0.0.0
+    </CODE>
+  </dd>
+
+  <dt>
+    <a name="caInternalDomains">caInternalDomains</a>
+  </dt>
+  <dd>
+    List of email address domains which are considered internal
+    (see <A HREF="#caInternalCertTypes">caInternalCertTypes</a>).<BR>
+    The integrity of your PKI should not rely on such mechanisms!<BR
+    Example:<BR>
+    <CODE>
+      caInternalDomains = domain1.my,domain2.my,trusteddomain.other
+    </CODE>
+  </dd>
+
+  <dt>
+    <a name="caIntermediateCACerts">caIntermediateCACerts</a>
+  </dt>
+  <dd>
+    (since 0.6.2)<BR>
+    List CA names (see section <A HREF="#openssl.cnf_ca">[&nbsp;ca&nbsp;]</a>
+    for which handling of intermediate CA certs should be provided.
+    E.g. <A HREF="files.html#get-cert.py">get-cert.py</a> will send
+    the intermediate CA certs as chain together with the downloaded
+    certificate.
+    Example:<BR>
+    <CODE>
+      caIntermediateCACerts = Persona,Friends,Member
+    </CODE>
+  </dd>
+
+</dl>
+
+<H4>
+  <a name="WWW-Options">WWW-Options</a>
+</H4>
+
+<dl>
+
+  <dt>
+    <a name="nsBaseUrl">nsBaseUrl</a>
+  </dt>
+  <dd>
+    Base-URL for the all URL addresses.
+    This is meant as fallback option if the CA-specific
+    attribute <em>nsBaseUrl</em> (see section <em>x509_extensions</em>)
+    is not set.
+  </dd>
+
+  <dt>
+    <a name="nsCAIndexUrl">nsCAIndexUrl</a>
+  </dt>
+  <dd>
+    Relative URL address of <A HREF="files.html#ca-index.py">ca-index.py</a>.
+  </dd>
+
+  <dt>
+    <a name="nsEnrollUrl">nsEnrollUrl</a>
+  </dt>
+  <dd>
+    Relative URL address of <A HREF="files.html#ns-enroll.py">ns-enroll.py</a>.
+  </dd>
+
+  <dt>
+    <a name="nsGetCertUrl">nsGetCertUrl</a>
+  </dt>
+  <dd>
+    Relative URL address of <A HREF="files.html#get-cert.py">get-cert.py</a>
+  </dd>
+
+  <dt>
+    <a name="nsViewCertUrl">nsViewCertUrl</a>
+  </dt>
+  <dd>
+    Relative URL address of <A HREF="files.html#view-cert.py">view-cert.py</a>
+  </dd>
+
+  <dt>
+    <a name="HelpUrl">HelpUrl</a></dt>
+  <dd>
+    Relative URL directory of help texts (e.g. <em>ns-enroll-help.html</em>).
+  </dd>
+
+
+  <dt>
+    <a name="ScriptMethod">ScriptMethod</a>
+  </dt>
+  <dd>
+    Preferred HTTP method for submitting form parameters.<BR>
+    Example:<BR>
+    <CODE>
+      ScriptMethod = POST
+    </CODE>
+  </dd>
+
+  <dt>
+    <a name="htmlBodyParam">htmlBodyParam</a>
+  </dt>
+  <dd>
+    (since 0.4.5)<BR>
+    Specifies the parameter string placed in the &lt;BODY&gt;-tag in
+    the output of the CGI-BIN-programs
+  </dd>
+
+  <dt>
+    htmlBodyText, htmlBodyLink, htmlBodyVlink, htmlBodyBgColor, htmlBodyBackground
+  </dt>
+  <dd>
+    ignored since 0.4.5 - use the more
+    flexible <A HREF="#htmlBodyParam">htmlBodyParam</a> parameter</dd>
+  </dd>
+
+</dl>
+
+
+<h3>
+  <a name="openssl.cnf_CA">CA Section</a>
+</h3>
+
+Parameters for the CA definition (separate CA sections referred
+by the CA's name in section <A HREF="#openssl.cnf_ca">[&nbsp;ca&nbsp;]</a>).
+
+<H4>
+  Parameters already known in OpenSSL
+</H4>
+
+Many standard parameters of the OpenSSL config are used.
+Refer to the OpenSSL docs for reading about these.
+
+<dl>
+  <dt>
+    <a name="dir">dir</a>
+  </dt>
+  <dd>
+    Where everything is kept
+  </dd>
+  <dt>
+    <a name="certs">certs</a>
+  </dt>
+  <dd>
+    Where the issued certs are kept
+  </dd>
+  <dt>
+    <a name="crl_dir">crl_dir</a>
+  </dt>
+  <dd>
+    Where the issued crl are kept
+  </dd>
+  <dt>
+    <a name="database">database</a>
+  </dt>
+  <dd>
+    Certificate database index file.
+  </dd>
+  <dt>
+    <a name="new_certs_dir">new_certs_dir</a>
+  </dt>
+  <dd>
+    Default place for new certs.
+  </dd>
+  <dt>
+    <a name="certificate">certificate</a>
+  </dt>
+  <dd>
+    The CA certificate
+  </dd>
+  <dt>
+    <a name="serial">serial</a>
+  </dt>
+  <dd>
+    The filename containing current serial number.
+  </dd>
+  <dt>
+    <a name="crl">crl</a>
+  </dt>
+  <dd>
+    The current CRL
+  </dd>
+  <dt>
+    <a name="private_key">private_key</a>
+  </dt>
+  <dd>
+    The private key of the CA
+  </dd>
+  <dt>
+    <a name="default_crl_days">default_crl_days</a>
+  </dt>
+  <dd>
+    how long before next CRL
+  </dd>
+  <dt>
+    <a name="policy">policy</a>
+  </dt>
+  <dd>
+    Name of policy section
+  </dd>
+  <dt>
+    <a name="x509_extensions">x509_extensions</a>
+  </dt>
+  <dd>
+    Name of section with X.509v3 extension attributes
+  </dd>
+</dl>
+
+<H4>Special parameters for pyCA</H4>
+<dl>
+  <dt>
+    <a name="signedby">signedby</a>
+  </dt>
+  <dd>
+    CA name of the CA which issued (or will issue) the CA certificate.
+    This pyCA attribute in the CA definition section allows building
+    CA hierarchies with <A HREF="files.html#ca-make.py">ca-make.py</a>. Up to now only a two-level
+    hierarchy is supported.
+  </dd>
+  <dt>
+    <a name="pend_reqs_dir">pend_reqs_dir</a>
+  </dt>
+  <dd>
+    (since 0.5.0)<BR>
+    Directory for storing certificate requests (default $dir/pendreqs).
+    This directory has to be writeable only for the user/group the web server
+    is run as and readable/writeable for the local mail delivery demon.
+    It has to be readable/writeable for CA administrator's user if you
+    want to enable automatic deletion of stale certificate requests
+    (see script <A HREF="files.html#ca-cycle-pub.py">ca-cycle-pub.py</a> and
+     option <A HREF="#caPendCertReqValid">caPendCertReqValid</a>).
+  </dd>
+  <dt>
+    <a name="new_reqs_dir">new_reqs_dir</a>
+  </dt>
+  <dd>
+    (since 0.5.0)<BR>
+    Directory for storing certificate requests after mail dialogue (default $dir/newreqs).
+    This directory has to be writable only for the mail delivery demon
+    and readable/writeable for the CA administrator's user.
+  </dd>
+  <dt>
+    <a name="req">req</a>
+  </dt>
+  <dd>
+    (since 0.5.0)<BR>
+    Name of <A HREF="#openssl.cnf_req">req section</a> to be used when creating
+    certificate requests for this CA definition. If this parameter is not
+    set the section [&nbsp;req&nbsp;] is used.
+  </dd>
+  <dt>
+    <a name="min_key_size">min_key_size</a>
+  </dt>
+  <dd>
+    (since 0.5.3)<BR>
+    Minimum required key size depending on CAs policy (default 0). If this is
+    set to a value greater than 0 there is a note displayed in
+    <A HREF="files.html#ns-enroll.py">ns-enroll.py</a> right above the 
+    &lt;KEYGEN&gt;-tag to inform the user about the required key size of a
+    certain certificate type and the submitted key size is checked.
+  </dd>
+  <dt>
+    <a name="ca_reqfile">ca_reqfile</a>
+  </dt>
+  <dd>
+    (since 0.5.3)<BR>
+    Pathname of the request config file to be used in
+    <A HREF="files.html#ca-make.py">ca-make.py</a>
+    for creating the certificate request for the CA certificate.
+  </dd>
+  <dt>
+    <a name="ca_x509_extfile">ca_x509_extfile</a>
+  </dt>
+  <dd>
+    (since 0.5.3)<BR>
+    Pathname of the file containing the extended X.509v3 attributes to be used
+    in <A HREF="files.html#ca-make.py">ca-make.py</a>
+    for signing the CA certificate.
+  </dd>
+</dl>
+
+
+<h3>
+  <a name="openssl.cnf_req">req Section</a>
+</h3>
+
+Parts of the input form generated by
+<A HREF="files.html#ns-enroll.py">ns-enroll.py</a> for a specific
+certificate type is defined by a <em>req section</em> already
+known in OpenSSL.
+
+<H4>
+  Parameters already known in OpenSSL
+</H4>
+
+<dl>
+  <dt>
+    <a name="_max">[parameter]</a>
+  </dt>
+  <dd>
+    (since 0.4.2)<BR>
+    Displayed description for this specific parameter.
+  </dd>
+  <dt>
+    <a name="_max">[parameter]_max</a>
+  </dt>
+  <dd>
+    (since 0.4.2)<BR>
+    Maximum length for this specific parameter.
+  </dd>
+  <dt>
+    <a name="_default">[parameter]_default</a>
+  </dt>
+  <dd>
+    (since 0.4.2)<BR>
+    Default for the specific parameter. If you define a comma-separated list
+    a select list is generated in the input form.
+  </dd>
+</dl>
+
+<H4>
+  Special parameters for pyCA
+</H4>
+<dl>
+  <dt>
+    <a name="_regex">[parameter]_regex</a>
+  </dt>
+  <dd>
+    (since 0.4.2)<BR>
+    Regular expression for valid strings.
+  </dd>
+</dl>
+
+
+<h3>
+  <a name="openssl.cnf_policy">policy Section</a>
+</h3>
+
+<A HREF="files.html#ns-enroll.py">ns-enroll.py</a> uses the
+definitions in the <em>policy section</em> for generating specific
+input forms depending on the certificate type to prevent users from generating
+invalid certificate requests.<BR>
+For each attribute name you can define one of the following policy options:
+<dl>
+  <dt>
+    matched
+  </dt>
+  <dd>
+    The [parameter]_default is read from the
+    <A HREF="#openssl.cnf_req">req section</a> and displayed as fixed
+    input parameter in the input form (&lt;INPUT TYPE=HIDDEN VALUE=&quot;[parameter]_default&quot;&gt;).
+  </dd>
+  <dt>
+    supplied
+  </dt>
+  <dd>
+    An input field or select list with [parameter]_default is shown and
+    the input field is handled as required.
+  </dd>
+  <dt>
+    optional
+  </dt>
+  <dd>
+    An input field or select list with [parameter]_default. The user
+    is allowed to leave this input field empty.
+  </dd>
+</dl>
+
+<h3>
+  <a name="openssl.cnf_x509_extensions">x509_extensions Section</a>
+</h3>
+
+Several X.509v3 extensions defined in the <em>x509_extensions section</em>
+are used to display URLs or determine the type of certificate usage.
+
+<dl>
+  <dt>
+    <a name="nsComment">nsComment</a>
+  </dt>
+  <dd>
+    This is used to display a nice comment in
+    <A HREF="files.html#ca-index.py">ca-index.py</a> and
+    <A HREF="files.html#ns-enroll.py">ns-enroll.py</a> about the
+    certificate usage.
+  </dd>
+  <dt>
+    <a name="nsBaseUrl">nsBaseUrl</a>
+  </dt>
+  <dd>
+    This is the base URL for all other URL addresses.
+  </dd>
+  <dt>
+    <a name="nsCaRevocationUrl">nsCaRevocationUrl</a>
+  </dt>
+  <dd>
+    This is used in <A HREF="files.html#ca-index.py">ca-index.py</a>
+    to display a link for downloading the latest certificate
+    revocation list (CRL) of a certificate authority.
+  </dd>
+  <dt>
+    <a name="nsRevocationUrl">nsRevocationUrl</a>
+  </dt>
+  <dd>
+    Up to now this parameter is not used in pyCA.
+  </dd>
+  <dt>
+    <a name="nsCaPolicyUrl">nsCaPolicyUrl</a>
+  </dt>
+  <dd>
+    This is used in
+    <A HREF="files.html#ca-index.py">ca-index.py</a> and
+    <A HREF="files.html#ns-enroll.py">ns-enroll.py</a>
+    to display a link to the certification practice statement of
+    a certificate authority.
+  </dd>
+  <dt>
+    <a name="keyUsage">keyUsage</a>
+  </dt>
+  <dd>
+    This is used to determine the certificate usage according
+    to PKIX (not implemented yet).
+  </dd>
+  <dt>
+    <a name="nsCertType">nsCertType</a>
+  </dt>
+  <dd>
+    This is used to determine the certificate usage according to
+    Netscape specification.
+  </dd>
+</dl>
+
+<!--#include file="ssi/footer.html"-->

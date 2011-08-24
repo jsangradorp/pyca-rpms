@@ -1,0 +1,31 @@
+# This is a config template for generating CSRs for
+# SSL server certs with OpenSSL.
+#
+# Usage:
+# openssl req -new -config ~michael/Proj/python/pyca/conf/ssl_server_csr.cnf
+#
+# You probably want to adjust the settings to reflect your
+# domain, company name etc.
+
+[ req ]
+default_bits            = 1024
+distinguished_name      = req_dn
+encrypt_rsa_key = yes
+
+[ req_dn ]
+countryName                     = ISO country code
+countryName_default             = "DE"
+stateOrProvinceName             = State/Province Name
+stateOrProvinceName_default     = ""
+localityName                    = Location
+localityName_default            = "Karlsruhe"
+organizationName                = Organization
+organizationName_default        = "stroeder.com"
+organizationalUnitName          = Organizational Unit Name
+organizationalUnitName_default  = "ITS"
+commonName                      = FQDN of SSL Server
+commonName_default              = ""
+commonName_max                  = 64
+#emailAddress                   = E-Mail address
+#emailAddress_default           = ""
+#emailAddress_max               = 64

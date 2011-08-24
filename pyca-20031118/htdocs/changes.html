@@ -1,0 +1,366 @@
+<!--#set var="pyca_subtitle" value="Changes"-->
+<!--#set var="pyca_pagedescription" value="History of released versions"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<dl>
+
+  <dt>Release 0.6.6 (release date unknown)</dt>
+  <dd>
+    <ul>
+      <li>
+        Fixed compability issues with Python 1.6/2.0+/2.1.
+      </li>
+      <li>
+        Fixed compability issues with certificate requests created
+        by <a href="http://www.mozilla.org">Mozilla browser</a>.
+      </li>
+      <li>
+        Added new parameter <a href="config.html#caCertConfirmReqLog">
+        caCertConfirmReqLog</a> for defining the path name of
+        file for log output of <em>sbin/ca-certreq-mail.py</em>.
+      </li>
+      <li>
+        English translation of help for <em>cgi-bin/client-enroll.py</em>
+        contributed by <a href="Roger Buck &lt;rog@saas.nsw.edu.au&gt">
+        Roger Buck &lt;rog@saas.nsw.edu.au&gt;</A>.
+      </li>
+      <li>
+        Use env variable <em>PYCALIB</em> to set name of the directory
+        containing the modules.
+      </li>
+      <li>
+        Patches contributed by
+        <a href="mailto:&quot;Stan O. Barber&quot; &lt;sob@verio.net&gt;">
+        &quot;Stan O. Barber&quot; &lt;sob@verio.net&gt;</A>.
+      </li>
+      <li>
+        If exception getopt.error is raised in command-line programs
+        the string representation of the exception instance is
+        displayed as error message.
+      </li>
+      <li>
+        VBScript-related fixes contributed by
+        <a href="mailto:Christian Barmala &lt;christian@barmala.de&gt;">
+        Christian Barmala &lt;christian@barmala.de&gt;</A>.
+      </li>
+      <li>
+        Fixed MIME types sent for M$ IE in <em>cgi-bin/get-cert.py</em>
+        (<em>application/pkix-cert</em>, see
+        <a target="external_doc" href="http://www.ietf.org/rfc/rfc2585.txt">RFC 2585</a>).
+      </li>
+      <li>
+        <em>cgi-bin/get-cert.py</em> can be called with path info
+        &quot;extension&quot; specifying the output format
+        (.der, .pem, .b64).
+      </li>
+      <li>
+        URLs pointing to <em>get-cert.py</em> have suffix .crt or .crl
+        for defining a pseudo &quot;file type&quot;.
+        This triggers certificate/CRL handling in older versions
+        of M$ IE which do not properly use the MIME-type for determining
+        the file type.
+      </li>
+      <li>
+        Massive modifications to default configuration file
+        shipped with package. The default configuration uses
+        a domainComponent root naming now.
+      </li>
+      <li>
+        Fixed bug concerning validity interval checking when
+        issuing sub CA certificates in <em>ca-make.py</em>.
+      </li>
+      <li>
+        Make use of parameter
+        <a href="config#caAdminMailAdr">caAdminMailAdr</a> in
+        <em>ca-certreq-mail.py</em>
+        for forming From: address if CA certificate does not contain
+        Email attribute in subject DN.
+      </li>
+      <li>
+        Fixed case-handling of <em>userCertificate</em> atttibute in
+        certs2ldap.py. The currently used attriute type name is determined
+        and also used in displayed status messages.
+      </li>
+      <li>
+        <var>bin/certs2ldap.py</var>:
+        now handles multi-valued <em>userCertificate</em>
+        atttibutes correctly, can delete revoked or expired certificates,
+        can add new LDAP entries.
+      </li>
+      <li>
+        No LDIF file created by client-enroll.py anymore.
+      </li>
+      <li>
+        If anyone messed up the ownership and permission
+        of CA certificate and key file it's restored at the
+        beginning of ca-make.py while still running as root.
+      </li>
+      <li>
+        Removed input of parameter userpassword in <em>cgi-bin/client-enroll.py</em>
+        since it was never used. Well, the lack of a user administration
+        concept shows here...
+      </li>
+      <li>
+        Text for confirmation e-mail was altered to avoid the message
+        being caught by spam filters looking for string
+        &quot;ignore this&quot; in message body.
+      </li>
+      <li>
+        Correctly evaluate form field <var>browsertype</var>
+        in <em>cgi-bin/client-enroll.py</em>.
+      </li>
+      <li>
+        Applied patch to module <var>vbs</var> contributed by
+        <em>Reiner Keller</em> for fixing compability issues
+        with M$ IE 6.x.
+      </li>
+      <li>
+        Since most people did not configure the CA cert extensions
+        properly some weird settings were removed.
+      </li>
+      <li>
+        Removed german umlauts from all Python and HTML sources.
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.6.5 (2000-07-30)</dt>
+  <dd>
+    <ul>
+      <li>
+        Bug fixes
+      </li>
+      <li>
+      </li>
+        New script bin/ldap2certs for downloading certs
+	for stunnel 
+	and build relay_clientcerts file for Postfix/TLS.
+      <li>
+        bin/certs2ldap.py now deletes revoked and expired
+	certs from LDAP server
+      </li>
+      <li>
+        cgi-bin/ns-revoke.py works now if web server has write access
+	to OpenSSL index.txt (not recommended)
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.6.4 (2000-07-07)</dt>
+  <dd>
+    <ul>
+      <li>
+        Small bug fixes and cosmetic changes
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.6.3 (1999-12-27)</dt>
+  <dd>
+    <ul>
+      <li>
+        Added parameter --nocrls to bin/ca2ldif.py
+      </li>
+      <li>
+        Displays SHA-1 fingerprints in view-cert.py and print-cacerts.py now
+	(mainly for users of M$ IE)
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.6.2 (1999-11-23)</dt>
+  <dd>
+    <ul>
+      <li>
+        new program view-cert.py for displaying certificates
+      </li>
+      <li>
+        ca-revoke.py can issue new CRL immediately
+      </li>
+      <li>
+        Improved support M$ IE (VBScript code for choosing
+	cryptographic provider by
+	Michael Konietzka &lt;ca-project@konietzka.de&gt;)
+      </li>
+      <li>
+        Handling of missing or wrong parameter input
+	in client-enroll.py is much more user-friendly.
+      </li>
+      <li>
+        Input field for browser type (to avoid problems with users
+	coming through proxies).
+      </li>
+      <li>
+        Got rid of scripts in sbin/ importing pycacnf.py
+	by using parameters --config and --pycalib.<BR>
+	This might require some changes to an installation
+	(provide parameter in mail aliases, CRON jobs etc.)
+      </li>
+      <li>
+        ca-cycle-priv.py can be forced to issue CRLs with parameter
+	--issuecrls
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.6.1  (1999-10-12)</dt>
+  <dd>
+    <ul>
+      <li>
+        Switched back to own parsing of cert datetime
+        since time.strptime() relys on glibc where strptime is broken!
+      </li>
+      <li>
+        Made certs2ldap.py a little bit more defensive.
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.6.0 (1999-10-10)</dt>
+  <dd>
+    <ul>
+      <li>
+        Dropped support for configuration parameter caCertFormat!
+      </li>
+      <li>
+	Support for M$ Internet Explorer
+	(VBScript-Code inspired by contributions of
+	contributed by Jordi Floriach &lt;jfloriach@afina.net&gt;)
+      </li>
+      <li>
+        ns-enroll.py is obsoleted by the more general client-enroll.py
+      </li>
+      <li>
+	Complete rewrite of certs2ldap.py, the script for uploading
+	e-mail certificates to a LDAP repository.
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.5.5 (1999-09-02)</dt>
+  <dd>
+    <ul>
+      <li>
+        Many bugfixes!
+      </li>
+      <li>
+        generate really unique IDs for cert requests
+      </li>
+      <li>
+        complete rewrite of ca2ldif.py
+      </li>
+      <li>
+        Small enhancements in user interface of CGI-BINs.
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.5.4 (1999-07-17)</dt>
+  <dd>
+    <ul>
+      <li>
+        Minor bugfixes
+      </li>
+      <li>
+        Small enhancements in user interface of CGI-BINs
+      </li>
+      <li>
+        Restrictive ownership/permissions setting of files/directories in ca-make.py
+      </li>
+      <li>
+        Some small handy scripts for doing boring copying of CA certs
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.5.3 (1999-06-19)</dt>
+  <dd>
+    <ul>
+      <li>
+        upgrade to OpenSSL 0.9.3a necessary
+      </li>
+      <li>
+        Many bugfixes and small enhancements
+      </li>
+      <li>
+	some changes to configuration (might be incompatible to previous 
+	versions!!!)
+      </li>
+      <li>
+        Many improvements and fixes to ca-make.py:
+	<ul>
+	  <li>
+            flexible usage of files containing X.509v3 extensions for CA certs
+	  </li>
+	  <li>
+            Implemented setting the permissions of various files/dirs.
+	  </li>
+	</ul>
+      </li>
+      <li>
+        Better performance by reading configuration from
+        pre-compiled (pickled) conf file
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.5.1 (1999-06-10)</dt>
+  <dd>
+    <ul>
+      <li>
+        upgrade to Python 1.5.2 necessary
+      </li>
+      <li>
+        some bugfixes and code cleaning
+      </li>
+      <li>
+        better documentation
+      </li>
+      <li>
+        some changes to configuration (might be incompatible to 0.4.5!!!)
+      </li>
+      <li>
+        allow defining the request form depending on specific certificate type
+      </li>
+      <li>
+        configuration of preferred certificate format
+      </li>
+      <li>
+        automatic publishing of certificates with informing user by e-mail
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.4.5 (1999-05-23)</dt>
+  <dd>
+    <ul>
+      <li>
+        some minor bugfixes
+      </li>
+      <li>
+        some rudimental documentation
+      </li>
+      <li>
+        cgi-bin/browser-check.py for testing cryptographic features of browsers
+      </li>
+      <li>
+        usage of ca-fix executable to fix CA certs during ca-make.py
+      </li>
+      <li>
+        usage of DER certs possible to speed up downloading
+      </li>
+      <li>
+        abandoned get-crl.py, get-cert.py does this either
+      </li>
+    </ul>
+  </dd>
+
+  <dt>Release 0.4.4 (1999-05-18)</dt>
+  <dd>
+    Don't remember...
+  </dd>
+
+</dl>
+
+<!--#include file="ssi/footer.html"-->

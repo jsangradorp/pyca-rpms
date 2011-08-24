@@ -1,0 +1,59 @@
+<!--#set var="pyca_subtitle" value="Overview"-->
+<!--#set var="pyca_pagedescription" value="Architectural overview"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<p>
+  This is an overview of the proposed systems architecure for running pyCA.
+  Note that pyCA implements a certificate authority - not a trust center.
+  This means:<br />
+  <strong>
+    No private keys of users are stored by pyCA at any time!
+    The users themselves are responsible for making backup copies of
+    their private keys and certificates!
+  </strong>
+</p>
+
+<h2>
+  <a name="Systems">Systems</a>
+</h2>
+The following systems are part of the public-key infrastructure (PKI):
+<dl>
+  <dt>
+    <a name="client_system">Client system</a>
+  </dt>
+  <dd>
+    This is the system of the user accessing the PKI services typically
+    running a Mail, WWW and/or LDAP client software. The user creates the
+    key pairs himself and stores his own private keys.
+  </dd>
+  <dt>
+    <a name="public_system">Public server system</a>
+  </dt>
+  <dd>
+    The public server system(s) are holding only public certificate data like
+    issued client-/server certificates and certificate revocation
+    lists (CRLs) and are running Internet services like Mail, WWW and/or LDAP
+    to give users access to the certificate data.<br />
+    No private keys are stored on this system at all.
+    However the systems administrator has to take care about securing
+    this system in the usual manner (firewalls, no other users etc.).
+    The services provided by this system should also be protected by
+    the SSL protocol to ensure some kind of server authentication and integrity.
+  </dd>
+  <dt>
+    <a name="private_system">Private CA system</a>
+  </dt>
+  <dd>
+    The private keys of the certificate authority should be hold on a
+    non-networked system which is only accessible by persons authorized to
+    issue certificates (e.g. a notebook put in a safe might be a 
+    practical choice). Data exchanged between this system and the
+    <a href="#public_system">public server system</a> is transported with the
+    help of removable media storage devices.<br />
+    If better support for cryptographic devices is available in OpenSSL
+    it is highly recommended that the private key data is stored e.g. on smart cards.
+  </dd>
+</dl>
+
+<!--#include file="ssi/footer.html"-->

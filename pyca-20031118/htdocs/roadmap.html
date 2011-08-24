@@ -1,0 +1,219 @@
+<!--#set var="pyca_subtitle" value="Roadmap"-->
+<!--#set var="pyca_pagedescription" value="Plans for future releases"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<p>
+  There are still a lot things to do in pyCA.
+</p>
+
+<table width="100%">
+  <tr>
+    <th>
+      Topic
+    </th>
+    <th>
+      Status
+    </th>
+  </tr>
+  <tr>
+    <td>
+      Clean up the code and remove all special features to
+      make it usable in a more common way.
+    </td>
+    <td>
+      released (0.4.1)
+    </td>
+  </tr>
+  <tr>
+    <td>Consequent use of the openssl.cnf throughout the whole package.
+    </td>
+    <td>released (0.4.1)
+    </td>
+  </tr>
+  <tr>
+    <td>Make certificate enrollment process more comfortable to users,
+	e.g. check parameters against openssl.cnf and give more
+	detailed feedback about input errors.
+    </td>
+    <td>released (0.4.2)
+    </td>
+  </tr>
+  <tr>
+    <td>Show clickable structure of openssl.cnf for downloading
+        CA certificates and CRLs.
+    </td>
+    <td>released (0.4.2)
+    </td>
+  </tr>
+  <tr>
+    <td>Documentation of configuration parameters
+    </td>
+    <td>released  (0.4.3)
+    </td>
+  </tr>
+  <tr>
+    <td>Script for generating of CA certificate hierarchies and initial CRLs
+    </td>
+    <td>
+      released (0.4.5)
+    </td>
+  </tr>
+  <tr>
+    <td>Speed up certificate loading by handling DER certificates
+    </td>
+    <td>
+      released (0.4.5)
+    </td>
+  </tr>
+  <tr>
+    <td>Documentation of all configuration parameters
+    </td>
+    <td>
+      released (0.5.0)
+    </td>
+  </tr>
+  <tr>
+    <td>Scripts <EM>ca-cycle-pub.py</EM> for cyclic CA tasks 
+    on the public server
+    </td>
+    <td>
+      most done and released (0.5.0)
+    </td>
+  </tr>
+  <tr>
+    <td>Update cnf-parsing to reflect the recent changes which
+        were made in OpenSSL (complete rewrite).
+    </td>
+    <td>
+      released (0.5.1)
+    </td>
+  </tr>
+  <tr>
+    <td>Support for Microsoft Internet Explorer
+    </td>
+    <td>
+      released (0.6.0)
+    </td>
+  </tr>
+  <tr>
+    <td>Improve LDAP support.
+    </td>
+    <td>
+      released (0.6.0)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Store initial master secrets in a database during registration
+      process involving RA or user itself. Printing of registration
+      info for postal shipment, automatic checking of initial master
+      secret.
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Scripts <EM>ca-cycle-priv.py</EM> for daily/hourly CA 
+    tasks on the system holding the private keys
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>English help texts.
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Enrollment script <EM>server-enroll.py</EM> for server 
+    certificate requests.
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Speed up access to bigger certificate databases by using the
+    GDBM package for holding a copy of the certificate database
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>
+      PKIX compliance (e.g. keyUsage etc.)
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Flexible logging support for CGI-BINs
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Documentation of the certification process
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Script <EM>cert-renewal.py</EM> for certificate renewal requests
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Script <EM>cert-revoke.py</EM> for certificate revocation requests
+    </td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Instant certificate issueing (what some CAs call &quot;Class 0&quot;)
+        without admin interaction</td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Improving privacy of certified objects by
+        implementing access control scheme to cert database
+	(maybe just rely on LDAP bind)</td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Support for anonymized certificates for better privacy</td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Signing stored data and e-mails if possible (depends on further S/MIME support in OpenSSL)</td>
+    <td>
+      to do
+    </td>
+  </tr>
+  <tr>
+    <td>Better localizing, multiple languages.</td>
+    <td>
+      to do
+    </td>
+  </tr>
+</table>
+
+<!--#include file="ssi/footer.html"-->

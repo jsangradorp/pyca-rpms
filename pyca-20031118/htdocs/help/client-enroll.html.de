@@ -1,0 +1,257 @@
+<html>
+<head>
+  <title>TestCA - Angaben in der Zertifikatsanforderung</title>
+  <META NAME="AUTHOR" CONTENT="www@ms.inka.de">
+  <META NAME="ROBOTS" CONTENT="NOINDEX,NOFOLLOW">
+</head>
+
+<body TEXT="#000000" LINK="Red" VLINK="Green" BGCOLOR="#FFFFFF">
+
+<h1>Angaben in der Zertifikatsanforderung</h1>
+
+<hr>
+
+<a name="countryName"><h2>country ISO code (ISO-Bezeichnung des Landes)</h2></a>
+Hier geben Sie die ISO-Kurzbezeichnung ihres Landes an.
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind ausschlie&szlig;lich zweibuchstabige Bezeichnungen erlaubt.
+L&auml;nderspezifische Buchstaben (wie z.B. Umlaute), Ziffern und
+sonstige Sonderzeichen ergeben eine
+Fehlermeldung.
+<P>
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'DE' f&uuml;r Deutschland
+    <dt>'US' f&uuml;r U.S.A.
+  </dl>
+</dl>
+
+<hr>
+
+<a name="stateOrProvinceName"><h2>Staat</h2></a>
+Voller Name des Bundeslandes/-staates oder einer Provinz.
+
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind nur alphanumerische Eingaben (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) und bestimmte Sonderzeichen ('.', '_' ,'-' und
+das Leerzeichen) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'New Jersey'
+    <dt>'Rheinland-Pfalz'
+    <dt>'Deutschland; Baden' ergibt Fehlermeldung wegen Semikolon
+  </dl>
+</dl>
+
+<hr>
+
+<a name="localityName"><h2>Ort</h2></a>
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind nur alphanumerische Eingaben (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) und bestimmte Sonderzeichen ('.', '_' ,'-' und
+das Leerzeichen) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'Frankfurt a.d. Oder'
+    <dt>'Frankfurt/Oder' ergibt Fehlermeldung wegen Schr&auml;gstrich
+  </dl>
+</dl>
+
+<hr>
+
+<a name="organizationName"><h2>Organisation</h2></a>
+Name der Organisation (z.B. Firma, staatliche Beh&ouml;rde, Verein etc.)
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind nur alphanumerische Eingaben (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) und bestimmte Sonderzeichen ('.', '_' ,'-' und
+das Leerzeichen) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'BLOCKfl&Ouml;te' e.V. ist erlaubt
+    <dt>'Karneval-/Stimmungsverein' ergibt Fehlermeldung wegen Schr&auml;gstrich
+  </dl>
+</dl>
+
+<hr>
+
+<a name="organizationalUnitName"><h2>Abteilung</h2></a>
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind nur alphanumerische Eingaben (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) und bestimmte Sonderzeichen ('.', '_' ,'-' und
+das Leerzeichen) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>
+    <dt>'Information &amp; Kommunikation' ergibt Fehlermeldung wegen
+        &amp; (Ampersand)
+    <dt>'Abt. 08/15' ergibt Fehlermeldung wegen Schr&auml;gstrich
+  </dl>
+</dl>
+
+<hr>
+
+<a name="commonName"><h2>Name</h2></a>
+Sie m&uuml;ssen einen allgemein verwendeten Namen angeben.
+Meist ist dies Vorname und Nachname einer Person.
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind nur alphanumerische Eingaben (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) und bestimmte Sonderzeichen ('.', '_' ,'-' und
+das Leerzeichen) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'Karl Linder' ist eine g&uuml;ltige Angabe
+    <dt>'Alexander, der Gro&szlig;e' ergibt Fehlermeldung wegen Komma
+        (mal abgesehen von der schlechten Grammatik ;-)
+  </dl>
+</dl>
+
+<hr>
+
+<a name="initials"><h2>Initialen</h2></a>
+Falls es in ihrer Organisation &uuml;blich ist ein Namens-K&uuml;rzel
+zu verwenden, so geben Sie dies bitte an.
+Meist sind das z. B. die Initialen von Vor- und Nachname.
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind nur max. 5 alphanumerische Zeichen (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'KL' ist eine g&uuml;ltige Angabe
+    <dt>'A-dG' ergibt Fehlermeldung wegen Bindestrich
+  </dl>
+</dl>
+
+<hr>
+
+<a name="emailAddress"><h2>E-Mail</h2></a>
+Hier ist zwingend erforderlich eine g&uuml;ltige E-Mail-Adresse
+anzugeben. Ohne diese Angabe kann die weitere Bearbeitung der
+Zertifikatsanforderung nicht erfolgen.
+
+<h4>G&uuml;ltige Eingaben</h4>
+Es sind alle Zeichen erlaubt, welche &uuml;blicherweise in E-Mail
+Adressen vorkommen. Das sind alle Buchstaben (ohne
+l&auml;nderspezifische Buchstaben) und besondere Sonderzeichen
+('@', '.', '=', '/', '-', '_' und das Leerzeichen).
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'michael@stroeder.com' ist g&uuml;ltig
+    <dt>'michael.str&ouml;der@inka.de' ergibt Fehlermeldung
+        wegen Umlaut
+    <dt>'kein.benutzer@gibt.es.nicht' ergibt Fehlermeldung wegen
+        ung&uuml;ltiger Internet-Dom&auml;ne
+  </dl>
+</dl>
+
+<hr>
+
+<a name="fax"></a>
+<a name="phone"><h2>Telefon- und FAX-Nummern</h2></a>
+Zur weiteren &Uuml;berpr&uuml;fung der Identit&auml;t ist die Angabe
+von Telefon- und FAX-Nummern hilfreich. Beide Angaben sind sp&auml;ter
+<b>nicht</b> Bestandteil des Zertifikates und werden <b>in keinem
+Fall</b> ver&ouml;ffentlicht. 
+
+<h4>G&uuml;ltige Eingaben</h4>
+Die Nummern m&uuml;ssen im internationalen Format<BR>
+<dl>
+  <dt>+[L&auml;ndercode]-[Vorwahl]-[Anschlussnummer]</dt>
+</dl>
+eingegeben werden.
+Der L&auml;ndercode darf nur aus 2 Ziffern, Vorwahl und
+Anschlussnummer aus einer Ziffernfolge bestehen.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'+49-721-96506' ist g&uuml;ltig
+    <dt>'0721/9650-6' ergibt Fehlermeldung wegen Schr&auml;gstrich
+  </dl>
+</dl>
+
+<hr>
+
+<a name="contactPerson"><h2>Ansprechpartner</h2></a>
+<h4>G&uuml;ltige Eingaben</h4>
+Zur weiteren &Uuml;berpr&uuml;fung ihrer Identit&auml;t ist die Angabe
+ihres Ansprechpartners bei uns hilfreich.
+Es sind nur alphanumerische Eingaben (Buchstaben, l&auml;nderspezifische
+Buchstaben und Ziffern) und bestimmte Sonderzeichen ('.', '_' ,'-' und
+das Leerzeichen) erlaubt.
+<dl>
+  <dt><h4>Beispiele:</h4><P>
+  <dl>
+    <dt>'Michael Str&ouml;der' ist eine g&uuml;ltige Angabe
+    <dt>'Alexander, der Gro&szlig;e' ergibt Fehlermeldung wegen Komma
+        (mal abgesehen von der schlechten Grammatik ;-)
+  </dl>
+</dl>
+
+<hr>
+
+<a name="days"><h2>G&uuml;ltigkeitsdauer</h2></a>
+Hier geben Sie an wieviele Tage das Zertifikat g&uuml;ltig sein
+soll. Die Zertifizierungsstelle entscheidet &uuml;ber die
+tats&auml;chliche G&uuml;ltigkeitsdauer in Abh&auml;ngigkeit der
+jeweiligen <a href="policy/">Policy</a>.
+
+<hr>
+
+<a name="challenge"><h2>Initial Master Secret</h2></a>
+Hier geben Sie ein Kennwort an, welches Sie vorher out-of-band
+von der Zertifizierungsstelle erhalten haben. Dies sichert
+zus&auml;tzlich die Identit&auml;tspr&uuml;fung.
+<hr>
+
+<a name="userpassword"><h2>Passwort</h2></a>
+Hier geben Sie ein Passwort an, welches Sie im Falle eines von Ihnen
+initiierten Schl&uuml;sselr&uuml;ckrufs mit angeben m&uuml;ssen.
+Dies dient dazu einen nichtauthorisierten R&uuml;ckruf ihres
+Zertifikats durch Dritte zu verhindern.<BR>
+Dieses Passwort wird bei der Eingabe nicht angezeigt. Um sicher zu gehen,
+da&szlig; dabei keine Tippfehler passieren, wird das Passwort zweimal
+eingegeben.
+<hr>
+
+<a name="SPKAC"><h2>Schl&uuml;ssell&auml;nge</h2></a>
+Hier geben Sie die L&auml;nge des zu erzeugenden RSA-Schl&uuml;ssels
+an. Netscape erzeugt beim Abschicken des Formulars ein entsprechendes
+Schl&uuml;sselpaar und sendet den &ouml;ffentlichen Schl&uuml;ssel mit
+der Zertifikatsanforderung an den Server.
+
+<h4>Anmerkung:</h4>
+L&auml;ngere Schl&uuml;ssel ben&ouml;tigen mehr Rechenleistung,
+was aber bei heutigen Arbeitsplatzrechnern kein Problem mehr
+darstellt.
+W&auml;hlen Sie also am besten immer die l&auml;ngste zur
+Verf&uuml;gung stehende Schl&uuml;ssell&auml;nge (1024 Bit).<p>
+<p>
+Die Auswahlm&ouml;glichkeiten der Schl&uuml;ssell&auml;nge ist von der
+verwendeten Netscape-Version abh&auml;ngig.<br>
+Wegen Restriktionen in den U.S.-amerikanischen
+Bestimmungen bzgl. dem Export von Verschl&uuml;sselungstechnik, k&ouml;nnen die
+Export-Versionen des Netscape Navigators max. nur
+RSA-Schl&uuml;ssel mit 512 Bit erstellen. (Sollten Sie eine solche
+Netscape-Version besitzen, so lohnt sich ein Blick auf 
+<a href="http://www.fortify.net">www.fortify.net</a> oder
+<a href="ftp://ftp.replay.com/pub/crypto/browsers/">ftp.replay.com</a>.)
+
+<h4>G&uuml;ltige Eingaben</h4>
+Die Auswahlm&ouml;glichkeiten der Schl&uuml;ssell&auml;nge wird von
+Netscape (oder anderen Browser, die das &lt;KEYGEN&gt;-Tag beachten)
+bereitgestellt. Es sind RSA-Schl&uuml;ssel der L&auml;nge 512
+Bit, 768 Bit und 1024 Bit m&ouml;glich.
+
+F&uuml;r manche Arten von Zertifikaten ist ein bestimmte
+Mindestl&auml;nge vorgeschrieben. Bitte lesen sie die betreffende
+<a href="policy/">Policy</a>.
+</body>
+</html>
+

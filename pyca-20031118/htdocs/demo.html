@@ -1,0 +1,33 @@
+<!--#set var="pyca_subtitle" value="Demo" -->
+<!--#set var="pyca_pagedescription" value="" -->
+<!--#include file="ssi/head.html" -->
+<!--#include file="ssi/navigation.html" -->
+
+<h2>Demo</h2>
+<p>
+  <A target="pyca_demo" HREF="http://sites.inka.de/ms/cgi-bin/pyca/ca-index.py">
+  ca-index.py</A> shows CA index of the <A HREF="conf/openssl.cnf">example
+  configuration file</A>. You can download CA certificates and CRLs of
+  my <em>TestCA</em> and call the application form for generating
+  certificate requests.
+</p>
+<p>
+  Please make backup copies of your certificate database and key files
+  (e.g. <em>cert7.db</em> and <em>key3.db</em> in your Netscape's profile
+  directory) <strong>before</strong> playing around with the CA certificates
+  and CRLs.
+</p>
+<p>
+  Only the <em>Persona</em> CA is meant for playing with
+  client-side key generation with
+  <A target="pyca_demo" HREF="http://sites.inka.de/ms/cgi-bin/pyca/client-enroll.py">
+  client-enroll.py</A>
+  and sending certificate requests. All other
+  CA types are dedicated to my personal use.
+</p>
+<p>
+  To all hacker wanna-be's:
+  There are <strong>no private keys on this server</strong>!
+</p>
+
+<!--#include file="ssi/footer.html" -->

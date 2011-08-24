@@ -1,0 +1,61 @@
+extensions = extension_section
+x509_extensions = extension_section
+
+[ req ]
+default_bits		= 1024
+distinguished_name	= req_dn
+encrypt_rsa_key = yes
+
+[ req_dn ]
+
+#1.domainComponent = DNS domain Component
+#1.domainComponent_default = "com"
+#2.domainComponent = DNS domain Component
+#2.domainComponent_default = "localhost"
+
+countryName			= ISO country code
+countryName_default		= "XX"
+
+stateOrProvinceName		= State/Province Name
+stateOrProvinceName_default	= ""
+
+localityName			= Location
+localityName_default		= ""
+
+organizationName		= Organization
+organizationName_default	= "Looser Org."
+
+organizationalUnitName		= Organizational Unit Name
+organizationalUnitName_default	= "bad CA!"
+
+commonName			= Common Name
+commonName_default              = "Root TestCA"
+commonName_max			= 64
+
+[extension_section]
+
+# Netscape cert extensions
+nsCertType = sslCA,emailCA,objCA
+nsComment = "This Root CA issues sub-CA certs of different policies and has no contact with end-entities."
+nsCaPolicyUrl = "https://localhost/Root/policy.html"
+nsCaRevocationUrl = "http://localhost/pyca/get-cert.py/Root/crl.crl"
+
+# PKIX
+basicConstraints=critical,CA:true
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer:always
+keyUsage = cRLSign,keyCertSign
+extendedKeyUsage = nsSGC,msSGC
+subjectAltName = URI:"http://localhost/pyca/get-cert.py/Root/ca.crt"
+crlDistributionPoints	= URI:"http://localhost/pyca/get-cert.py/Root/crl.crl"
+#certificatePolicies=ia5org,@polsect
+
+[ polsect ]
+#policyIdentifier=1.2.3.4
+#CPS="https://localhost/Root/policy.html"
+#userNotice=@notice
+
+[ notice ]
+explicitText="This Root CA issues sub-CA certs of different policies and has no contact with end-entities."
+organization="Looser Org. with bad CA admin."
+noticeNumbers=4, 2

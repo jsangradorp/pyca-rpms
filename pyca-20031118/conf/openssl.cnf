@@ -1,0 +1,478 @@
+#
+# OpenSSL configuration file: Two-level hierarchy
+#
+# Root-+
+#      |
+#      +-UserCerts     (end user certs for S/MIME e-mail protection and
+#      |                client authentication)
+#      |
+#      +-AuthCerts      (solely for strong authentication with SSL/TLS)
+#      |
+#      +-ServerCerts    (solely for server certificates with SSL/TLS)
+#      |
+#      +-CodeSigning    (solely for code signing, Authenticode etc.)
+
+RANDFILE		= "$ENV::HOME/.rnd"
+oid_file		= /etc/openssl/.oid
+oid_section             = new_oids
+
+[ new_oids ]
+
+# We can add new OIDs in here for use by 'ca' and 'req'.
+# Add a simple OID like this:
+# testoid1=1.2.3.4
+# Or use config file substitution like this:
+# testoid2=${testoid1}.5.6
+dnQualifier     = 2.5.4.46
+surName         = 2.5.4.4
+givenName       = 2.5.4.42
+initials        = 2.5.4.43
+generationQualifier = 2.5.4.44
+userID          = 0.9.2342.19200300.100.1.1
+
+####################################################################
+[ ca ]
+
+Root		= CA_Root
+EmailCerts	= CA_EmailCerts
+AuthCerts	= CA_AuthCerts
+CodeSigning	= CA_CodeSigning
+ServerCerts	= CA_ServerCerts
+
+####################################################################
+
+[ CA_Root ]
+dir		= /usr/local/myCA/Root# Where everything is kept
+certs		= $dir/certs		# Where the issued certs are kept
+crl_dir		= $dir/crl		# Where the issued crl are kept
+database	= $dir/index.txt	# database index file.
+new_certs_dir	= $dir/newcerts		# default place for new certs.
+pend_reqs_dir	= ""			# default place for new unconfirmed cert reqs.
+new_reqs_dir	= ""			# default place for new cert reqs.
+certificate	= $dir/cacert.pem 	# The CA certificate
+serial		= $dir/serial 		# The current serial number
+crl		= $dir/crl.pem 		# The current CRL
+private_key	= $dir/private/cakey.pem# The private key
+RANDFILE	= $dir/private/.rand	# private random number file
+default_days	= 730			# how long to certify for
+default_crl_days= 5			# how long before next CRL
+default_md	= sha1			# which md to use.
+preserve	= no			# keep passed DN ordering
+policy		= policy_CA
+ca_x509_extfile	= /etc/openssl/cacert_Root.cnf
+x509_extensions	= x509v3_ext_CA		# This section is only used for
+                                        # displaying the params in ca-index.py
+
+[ CA_EmailCerts ]
+dir		= /usr/local/myCA/EmailCerts	# Where everything is kept
+certs		= $dir/certs		# Where the issued certs are kept
+crl_dir		= $dir/crl		# Where the issued crl are kept
+database	= $dir/index.txt	# database index file.
+new_certs_dir	= $dir/newcerts		# default place for new certs.
+pend_reqs_dir	= $dir/pendreqs		# default place for new unconfirmed cert reqs.
+new_reqs_dir	= $dir/newreqs		# default place for new cert reqs.
+certificate	= $dir/cacert.pem 	# The CA certificate
+serial		= $dir/serial 		# The current serial number
+crl		= $dir/crl.pem 		# The current CRL
+private_key	= $dir/private/cakey.pem# The private key
+RANDFILE	= $dir/private/.rand	# private random number file
+default_days	= 200			# how long to certify for
+default_crl_days= 2			# how long before next CRL
+default_md	= sha1			# which md to use.
+preserve	= no			# keep passed DN ordering
+policy		= policy_EmailCerts
+x509_extensions	= x509v3_ext_EmailCerts
+signedby	= Root
+ca_x509_extfile	= /etc/openssl/cacert_EmailCerts.cnf
+req		= req_EmailCerts
+min_key_size    = 768
+
+[ CA_AuthCerts ]
+dir		= /usr/local/myCA/AuthCerts	# Where everything is kept
+certs		= $dir/certs		# Where the issued certs are kept
+crl_dir		= $dir/crl		# Where the issued crl are kept
+database	= $dir/index.txt	# database index file.
+new_certs_dir	= $dir/newcerts		# default place for new certs.
+pend_reqs_dir	= $dir/pendreqs		# default place for new unconfirmed cert reqs.
+new_reqs_dir	= $dir/newreqs		# default place for new cert reqs.
+certificate	= $dir/cacert.pem 	# The CA certificate
+serial		= $dir/serial 		# The current serial number
+crl		= $dir/crl.pem 		# The current CRL
+private_key	= $dir/private/cakey.pem# The private key
+RANDFILE	= $dir/private/.rand	# private random number file
+default_days	= 200			# how long to certify for
+default_crl_days= 2			# how long before next CRL
+default_md	= sha1			# which md to use.
+preserve	= no			# keep passed DN ordering
+policy		= policy_AuthCerts
+x509_extensions	= x509v3_ext_AuthCerts
+signedby	= Root
+ca_x509_extfile	= /etc/openssl/cacert_AuthCerts.cnf
+req		= req_AuthCerts
+
+[ CA_CodeSigning ]
+dir		= /usr/local/myCA/CodeSigning	# Where everything is kept
+certs		= $dir/certs		# Where the issued certs are kept
+crl_dir		= $dir/crl		# Where the issued crl are kept
+database	= $dir/index.txt	# database index file.
+new_certs_dir	= $dir/newcerts		# default place for new certs.
+pend_reqs_dir	= $dir/pendreqs		# default place for new unconfirmed cert reqs.
+new_reqs_dir	= $dir/newreqs		# default place for new cert reqs.
+certificate	= $dir/cacert.pem 	# The CA certificate
+serial		= $dir/serial 		# The current serial number
+crl		= $dir/crl.pem 		# The current CRL
+private_key	= $dir/private/cakey.pem# The private key
+RANDFILE	= $dir/private/.rand	# private random number file
+default_days	= 200			# how long to certify for
+default_crl_days= 5			# how long before next CRL
+default_md	= sha1			# which md to use.
+preserve	= no			# keep passed DN ordering
+policy		= policy_CodeSigning
+x509_extensions	= x509v3_ext_CodeSigning
+signedby	= Root
+ca_x509_extfile	= /etc/openssl/cacert_CodeSigning.cnf
+req		= req_EmailCerts
+
+[ CA_ServerCerts ]
+dir		= /usr/local/myCA/ServerCerts	# Where everything is kept
+certs		= $dir/certs		# Where the issued certs are kept
+crl_dir		= $dir/crl		# Where the issued crl are kept
+database	= $dir/index.txt	# database index file.
+new_certs_dir	= $dir/newcerts		# default place for new certs.
+pend_reqs_dir	= $dir/pendreqs		# default place for new unconfirmed cert reqs.
+new_reqs_dir	= $dir/newreqs		# default place for new cert reqs.
+certificate	= $dir/cacert.pem 	# The CA certificate
+serial		= $dir/serial 		# The current serial number
+crl		= $dir/crl.pem 		# The current CRL
+private_key	= $dir/private/cakey.pem# The private key
+RANDFILE	= $dir/private/.rand	# private random number file
+default_days	= 60			# how long to certify for
+default_crl_days= 2			# how long before next CRL
+default_md	= sha1			# which md to use.
+preserve	= no			# keep passed DN ordering
+policy		= policy_ServerCerts
+x509_extensions	= x509v3_ext_ServerCerts
+signedby	= Root
+ca_x509_extfile	= /etc/openssl/cacert_ServerCerts.cnf
+
+########################### Policies ###############################
+
+[ policy_EmailCerts ]
+countryName		= optional
+stateOrProvinceName	= optional
+localityName		= optional
+organizationName	= supplied
+organizationalUnitName	= optional
+commonName		= supplied
+emailAddress		= supplied
+
+[ policy_AuthCerts ]
+organizationName	= supplied
+organizationalUnitName	= optional
+userID		        = supplied
+#emailAddress		= supplied
+
+[ policy_CodeSigning ]
+countryName		= match
+stateOrProvinceName	= match
+localityName		= match
+organizationName	= match
+organizationalUnitName	= optional
+commonName		= supplied
+userID		        = optional
+emailAddress		= supplied
+
+[ policy_ServerCerts ]
+countryName		= supplied
+stateOrProvinceName	= optional
+localityName		= supplied
+organizationName	= supplied
+organizationalUnitName	= optional
+commonName		= supplied
+
+####################################################################
+
+[ req ]
+default_bits		= 1024
+default_keyfile 	= privkey.pem
+distinguished_name	= req_distinguished_name
+# attributes		= req_attributes
+
+[ req_distinguished_name ]
+countryName			= country ISO code
+countryName_default		= DE
+countryName_min			= 2
+countryName_max			= 2
+countryName_regex		= "[a-zA-Z][a-zA-Z]"
+
+stateOrProvinceName		= State/Province Name
+stateOrProvinceName_default	= ""
+
+localityName			= Location
+localityName_default		= Karlsruhe
+
+organizationName		= Organization
+organizationName_default	= "Your Organization"
+
+organizationalUnitName		= Organizational Unit Name
+organizationalUnitName_default	= Department One,Department Two,Department Three
+
+commonName			= Common Name
+commonName_max			= 64
+
+emailAddress			= Email Address
+emailAddress_default		= ""
+emailAddress_max		= 64
+emailAddress_regex		= "^([\w@.=/_ +-]+)@([\w-]+)(\.[\w-]+)*$"
+
+[ req_attributes ]
+challengePassword		= A challenge password
+challengePassword_min		= 4
+challengePassword_max		= 20
+
+# unstructuredName		= An optional company name
+
+####################################################################
+
+[ req_EmailCerts ]
+distinguished_name	= req_distinguished_name_EmailCerts
+
+[ req_distinguished_name_EmailCerts ]
+countryName			= country ISO code
+countryName_default		= "DE"
+countryName_min			= 2
+countryName_max			= 2
+countryName_regex		= "[a-zA-Z][a-zA-Z]"
+
+stateOrProvinceName		= State/Province Name
+stateOrProvinceName_default	= ""
+
+localityName			= Location
+localityName_default		= Karlsruhe
+
+organizationName		= Organization
+organizationName_default	= "Your Organization"
+
+organizationalUnitName		= Organizational Unit Name
+organizationalUnitName_default	= Department One,Department Two,Department Three
+
+commonName			= Common Name
+commonName_max			= 64
+
+emailAddress			= Email Address
+emailAddress_default		= ""
+emailAddress_max		= 64
+emailAddress_regex		= "^([\w@.=/_ +-]+)@([\w-]+)(\.[\w-]+)*$"
+
+[ req_AuthCerts ]
+distinguished_name	= req_distinguished_name_AuthCerts
+
+[ req_distinguished_name_AuthCerts ]
+
+organizationName		= Organization
+organizationName_default	= "Your Organization"
+
+userID			= "User ID"
+userID_max              = 8
+
+emailAddress			= Email Address
+emailAddress_default		= "@ms.inka.de"
+emailAddress_max		= 64
+emailAddress_regex		= "^([\w@.=/_ +-]+)@([\w-]+)(\.[\w-]+)*$"
+
+####################################################################
+
+[ req_short_and_empty ]
+distinguished_name	= req_distinguished_name_short_and_empty
+
+[ req_distinguished_name_short_and_empty ]
+countryName			= country ISO code
+countryName_min			= 2
+countryName_max			= 2
+countryName_regex		= "[a-zA-Z][a-zA-Z]"
+
+stateOrProvinceName		= State/Province Name
+
+localityName			= Location
+
+organizationName		= Organization
+
+organizationalUnitName		= Organizational Unit Name
+
+commonName			= Common Name
+commonName_max			= 64
+
+emailAddress			= Email Address
+emailAddress_max		= 64
+emailAddress_regex		= "^([\w@.=/_ +-]+)@([\w-]+)(\.[\w-]+)*$"
+
+##############################################################################
+
+[ x509v3_ext_CA ]
+basicConstraints        = CA:true
+keyUsage = cRLSign,keyCertSign
+crlDistributionPoints	= URI:"http://localhost/pyca/get-cert.py/Root/crl.crl"
+nsComment		= "This certificate is used for issueing sub-CA certs."
+nsBaseUrl		= "https://localhost/"
+nsCaRevocationUrl	= pyca/get-cert.py/Root/crl.crl
+nsRevocationUrl		= pyca/ns-check-rev.py/Root?
+nsRenewalUrl		= pyca/ns-renewal.py/Root?
+nsCaPolicyUrl		= TestCA/policy/CA-policy.html
+
+[ x509v3_ext_EmailCerts ]
+# PKIX extensions
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer:always
+keyUsage                = nonRepudiation,digitalSignature,keyEncipherment
+extendedKeyUsage        = emailProtection
+issuerAltName = URI:"https://localhost/pyca/get-cert.py/EmailCerts/ca.crt"
+crlDistributionPoints	= URI:"http://localhost/pyca/get-cert.py/EmailCerts/crl.crl"
+subjectAltName = email:copy
+# Netscape-specific extensions
+nsComment		= "This certificate is used for e-mail."
+nsBaseUrl		= "https://localhost/"
+nsCaRevocationUrl	= pyca/get-cert.py/EmailCerts/crl.crl
+nsRevocationUrl		= pyca/ns-check-rev.py/EmailCerts?
+nsRenewalUrl		= pyca/ns-renewal.py/EmailCerts?
+nsCaPolicyUrl		= TestCA/policy/EmailCerts-policy.html
+nsCertType		= email
+
+[ x509v3_ext_AuthCerts ]
+# PKIX extensions
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer:always
+keyUsage                = digitalSignature
+extendedKeyUsage        = clientAuth
+issuerAltName = URI:"https://localhost/pyca/get-cert.py/AuthCerts/ca.crt"
+crlDistributionPoints	= URI:"http://localhost/pyca/get-cert.py/AuthCerts/crl.crl"
+# Netscape-specific extensions
+nsComment		= "This certificate is used for strong authentication."
+nsBaseUrl		= "https://localhost/"
+nsCaRevocationUrl	= pyca/get-cert.py/AuthCerts/crl.crl
+nsRevocationUrl		= pyca/ns-check-rev.py/AuthCerts?
+nsRenewalUrl		= pyca/ns-renewal.py/AuthCerts?
+nsCaPolicyUrl		= TestCA/policy/AuthCerts-policy.html
+nsCertType		= client
+
+[ x509v3_ext_CodeSigning ]
+# PKIX extensions
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer:always
+keyUsage                = digitalSignature
+extendedKeyUsage        = codeSigning
+issuerAltName = URI:"https://localhost/pyca/get-cert.py/CodeSigning/ca.crt"
+crlDistributionPoints	= URI:"http://localhost/pyca/get-cert.py/CodeSigning/crl.crl"
+# Netscape-specific extensions
+nsComment		= "This certificate is used for CodeSigning signing."
+nsBaseUrl		= "https://localhost/"
+nsCaRevocationUrl	= pyca/get-cert.py/CodeSigning/crl.crl
+nsRevocationUrl		= pyca/ns-check-rev.py/CodeSigning?
+nsRenewalUrl		= pyca/ns-renewal.py/CodeSigning?
+nsCaPolicyUrl		= TestCA/policy/CodeSigning-policy.html
+nsCertType		= objsign
+
+[ x509v3_ext_ServerCerts ]
+# PKIX extensions
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer:always
+crlDistributionPoints	= URI:"http://localhost/pyca/get-cert.py/ServerCerts/crl.crl"
+keyUsage                = keyEncipherment
+extendedKeyUsage        = serverAuth,nsSGC,msSGC
+# Netscape-specific extensions
+nsComment		= "This certificate is used for SSL ServerCerts."
+nsBaseUrl		= "https://localhost/"
+nsCaRevocationUrl	= pyca/get-cert.py/ServerCerts/crl.crl
+nsRevocationUrl		= pyca/ns-check-rev.py/ServerCerts?
+nsRenewalUrl		= pyca/ns-renewal.py/ServerCerts?
+nsCaPolicyUrl		= TestCA/policy/ServerCerts-policy.html
+nsCertType		= server
+
+# [ pyca ] is a proprietary, non-OpenSSL section for the pyca-package
+# on http://www.pyca.de/
+
+[ pyca ]
+
+caCertFormat = DER
+
+# Base-URL for the other URL addresses
+# This is meant as fallback option if the CA-specific
+# attribute nsBaseUrl is not set
+nsBaseUrl = "https://localhost/"
+
+# Relative URL address of ca-index.py
+nsCAIndexUrl = pyca/ca-index.py
+
+# Relative URL address of client-enroll.py
+nsEnrollUrl = pyca/client-enroll.py
+
+# Relative URL address of get-cert.py
+nsGetCertUrl = pyca/get-cert.py
+
+# Relative URL address of view-cert.py
+nsViewCertUrl = pyca/view-cert.py
+
+# Pathname of the openssl executable
+OpenSSLExec = /usr/bin/openssl
+
+# Username of caadmin
+userCAAdmin = caadmin
+
+# Username of WWW Server
+userWWWRun = wwwrun
+
+# Username of mail delivery demon
+userMailDaemon = daemon
+
+# Preferred HTTP method for submitting form parameters
+ScriptMethod = POST
+
+# Relative URL address of help texts (e.g. client-enroll-help.html)
+HelpUrl = inkasite/python/pyca/help/
+
+# The default SMTP mail relay
+MailRelay = localhost
+
+# Directory for temporary files
+TmpDir = /tmp
+
+# Path to file for log output of ca-certreq-mail.py.
+# The directory must be writeable for the user defined with parameter
+# userMailDaemon
+caCertConfirmReqLog = /var/log/pyca/ca-certreq-mail.out
+
+# Pathname for the error log file.
+# stderr is used as default, if empty or not defined.
+#ErrorLog = /var/log/pyca/httpd_error_log
+
+# E-mail address of the mail dialogue script for certificate requests
+# if empty, no mail dialogue is initiated.
+caCertReqMailAdr = confirm-cert-req@ms.inka.de
+
+# Central e-mail address of the CA's administrator.
+# This is used as From: address if the subject name of a CA cert does
+# not contain an Email attribute.
+caAdminMailAdr = caadmin@ms.inka.de
+
+# Amount of time [h] how long a pending certificate request is stored
+# in caPendCertReqDir without being confirmed by e-mail.
+# Set to zero (this is the default) to disable automatic deletion of
+# unconfirmed certificate requests by ca-cycle-pub.py.
+caPendCertReqValid = 24
+
+# List CA names for which certificate requests can only be created
+# from an internal network (see caInternalIPAdr and caInternalDomains).
+# The integrity of your PKI should not be based on such mechanisms!
+caInternalCertTypes = CodeSigning
+
+# List of network addresses/-masks which are considered internal
+caInternalIPAdr = 127.0.0.0/255.0.0.0,10.0.0.0/255.0.0.0
+
+# List of email address domains which are handled as internal
+caInternalDomains = pyca.de
+
+# List of CA names for which handling of intermediate CA certs should
+# be provided.
+caIntermediateCACerts = EmailCerts
+
+# All parameters for <BODY> tag (quote " with ´´).
+htmlBodyParam = ´TEXT="#000000" LINK="Red" VLINK="Green" BGCOLOR="#FFFFFF"´

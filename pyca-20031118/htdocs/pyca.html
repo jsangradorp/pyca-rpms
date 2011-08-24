@@ -1,0 +1,44 @@
+<!--#set var="pyca_subtitle" value="X.509 CA"-->
+<!--#set var="pyca_pagedescription" value="Software for running a X.509/PKIX certificate authority"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<h2><A NAME="Abstract">Abstract</a></h2>
+<p>
+  The usage of cryptographic techniques promises secure usage of
+  Internet services concerning authentication of clients and servers and
+  authorized access to sensitive data. During the last two years it turned
+  out that X.509 certificates, SSL and S/MIME are the relevant, widely
+  adopted cryptographic standards for securing various Internet services
+  like WWW, Mail, etc.
+</p>
+<p>
+  However these standards require setting up a working X.509-based PKI
+  (pulic key infrastructure).
+  Although there is a quite lot of documentation and some example software
+  for setting up a primitive PKI with an own certificate authority
+  with the free package <a href="http://www.openssl.org/">OpenSSL</a>
+  it seems that this task is not easy for most people. There is a lot of
+  discussion on various mailing-lists, e.g. how to generate self-signed
+  CA certificates, generate certificate requests with the famous WWW browsers and how to provide
+  client certificates / certificate revocation lists for download, etc.
+  Additionally if the certification business of an organization gets only a
+  little bit more serious one has to take care about critical security issues.
+</p>
+<p>
+  <a href="http://www.pyca.de/">pyCA</a> tries to make it
+  easier for people to set up and run a organizational certificate authority
+  which fulfills the need for a fairly secure certification processing.
+  The package also tries to reduce administrative tasks and user's frustration
+  by providing a comfortable web interface to users contacting the certificate
+  authority.
+</p>
+
+<h2>Project status</h2>
+<p>
+Unfortunately I do not have the time at the moment to spend more time
+on developing this project. I will apply bug fixes and patches submitted
+by users as long as they do not require too much rewriting of code.
+</p>
+
+<!--#include file="ssi/footer.html"-->

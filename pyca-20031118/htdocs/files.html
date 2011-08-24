@@ -1,0 +1,240 @@
+<!--#set var="pyca_subtitle" value="Files"-->
+<!--#set var="pyca_pagedescription" value="List of included files"-->
+<!--#include file="ssi/head.html"-->
+<!--#include file="ssi/navigation.html"-->
+
+<p>
+  This is an overview of all Python programs in pyCA and is intended
+  to give you an idea of what the package does.
+</p>
+
+<h2><a NAME="bin">bin/</a></h2>
+<p>
+  The scripts in this section handle are simple helper scripts for
+  copying public certificate data (mainly the CA certs).<BR>
+  Use [scriptname].py --help to find out more about the usage of each script.
+</p>
+
+<dl>
+
+  <dt>
+    <a NAME="ca2ldif.py">ca2ldif.py</a>
+  </dt>
+  <dd>
+    Write CA certificates and CRLs to a LDIF file. This is intended for
+    initially setting up the CA entries <strong>not</strong> for daily
+    CRL update. The entries are of objectclass <em>certificationAuthority</em>
+    and contain the attributes <em>cACertificate;binary</em>,
+    <em>authorityRevocationList;binary</em> and
+    <em>certificateRevocationList;binary</em>. This might require extending
+    schemas on LDAPv2 servers. Have a look at your LDAP servers configuration
+    documentation.
+  </dd>
+  <dt>
+    <a NAME="certs2ldap.py">certs2ldap.py</a>
+  </dt>
+  <dd>
+    Send all certs and CRLs to a LDAP repository.
+  </dd>
+  <dt>
+    <a NAME="copy-cacerts.py">copy-cacerts.py</a>
+  </dt>
+  <dd>
+    Copy all CA certificates defined in an OpenSSL configuration to 
+    a bundled PEM file or a directory with hash-named symbolic links.
+    This is quite handy in conjunction with ApacheSSL or Apache with
+    mod_ssl for copying the files for <em>SSLCACertificateFile</em> or
+    <em>SSLCACertificatePath</em>.
+  </dd>
+  <dt>
+    <a NAME="ns-jsconfig.py">ns-jsconfig.py</a>
+  </dt>
+  <dd>
+    Create Javascript code containing all CA certificates defined in
+    an OpenSSL configuration for use with the Netscape admin tool
+    (creating netscape.cfg).
+  </dd>
+  <dt>
+    <a NAME="print-cacerts.py">print-cacerts.py</a>
+  </dt>
+  <dd>
+    This simple script prints all CA certs on stdout.
+    It is intended to generate authentic printouts (on paper!) of the
+    CA certs fingerprints and is typically run on the private CA system.<BR>
+    Choose the option <em>--html</em> to generate nicer formatted HTML-output
+    instead of the default textual output in ISO-8859-1.</dd>
+  <dt>
+    <a NAME="ns-jsconfig.py">ns-jsconfig.py</a>
+  </dt>
+  <dd>
+    Create a Javascript file to be included in a Netscape configuration
+    file (netscape.cfg).
+  </dd>
+</dl>
+
+
+<h2>
+  <a NAME="sbin">sbin/</a>
+</h2>
+The scripts in this section handle administrative tasks.
+<dl>
+  <dt>
+    <a NAME="pickle-cnf.py">pickle-cnf.py</a>
+  </dt>
+  <dd>
+    Create a pickled copy the OpenSSL configuration object for faster
+    reading of the configuration. The pickle-file name is the name of the
+    OpenSSL configuration file plus <em>.pickle</em>.
+  </dd>
+  <dt>
+    <a NAME="ca-make.py">ca-make.py</a>
+  </dt>
+  <dd>
+    Generate a CA hierarchy, all necessary files and directories
+    and all initial CRLs (see also <a HREF="config.html#signedby">signedby</a>
+    extension in OpenSSL configuration file). This is intended to be run
+    under user <em>root</em> since it sets the ownership and permissions.</dd>
+  <dt>
+    <a NAME="ca-certreq-mail.py">ca-certreq-mail.py</a>
+  </dt>
+  <dd>
+    Handles the mail dialogue after certificate request.
+    The SPKAC certificate request and LDIF data is moved from the
+    directory <a HREF="config.html#pend_reqs_dir">pend_reqs_dir</a>
+    to <a HREF="config.html#new_reqs_dir">new_reqs_dir</a>.
+    Set this script in your /etc/aliases, procmailrc or similar to receive
+    mails for the address specified in
+    <a HREF="config.html#caCertReqMailAdr">caCertReqMailAdr</a>.
+  </dd>
+  <dt>
+    <a NAME="ca-cycle-pub.py">ca-cycle-pub.py</a>
+  </dt>
+  <dd>
+    This script is typically run by the CA admin user via CRON or
+    a similar task manager on a networked system holding the public
+    certificate data. It does several jobs:<BR>
+    <ul>
+      <li>
+        Publish new certificates and inform user via e-mail
+        where to download his certificate
+      </li>
+      <li>
+        Remove stale certificate requests from 
+        <a HREF="config.html#pend_reqs_dir">pend_reqs_dir</a>.
+      </li>
+      <li>
+        Spool certificate requests and certificate revocation requests
+        to the system holding the CA's private keys. (not implemented yet)
+      </li>
+      <li>
+        Spool certificates and certificate revocation lists
+        from the system holding the CA's private keys. (not implemented yet)
+      </li>
+    </ul>
+  </dd>
+  <dt><a NAME="ca-cycle-priv.py">ca-cycle-priv.py</a></dt>
+  <dd>
+    This script is run on the system where the private keys
+    of the CA are stored.
+    It does several jobs:<BR>
+    <ul>
+      <li>
+        Mark expired certificates in OpenSSL certificate database
+      </li>
+      <li>
+        Generate new CRLs, move old CRLs to archive (not implemented yet)
+      </li>
+      <li>
+        Process certificate requests and certificate revocation requests (not implemented yet)
+      </li>
+      <li>
+        Spool certificate database, issued certificates and
+        CRLs to public WWW and LDAP server (not implemented yet)
+      </li>
+    </ul>
+  </dd>
+</dl>  
+
+
+<h2>
+  <a NAME="cgi-bin">cgi-bin/</a>
+</h2>
+<p>
+  Several CGI-BIN programs provide comfortable user access to the PKI.
+</p>
+<dl>
+  <dt>
+    <a NAME="browser-check.py">browser-check.py</a>
+  </dt>
+  <dd>
+    Checks the SSL and key generation capabilities of a browser.
+    This is very handy to find out if a certain web client
+    has sufficient capabilities for the certification process or your policy.<BR>
+    Up to now this CGI-BIN does only make sense when being invoked on a server
+    running
+    <a HREF="http://www.apache-ssl.org/">ApacheSSL</a> or
+    Apache with <a HREF="http://www.modssl.org/">mod_ssl</a> with
+    &quot;SSLOptions +CompatEnvVars&quot; set in httpd.conf.
+  </dd>
+  <dt>
+    <a NAME="ca-index.py">ca-index.py</a>
+  </dt>
+  <dd>Show a clickable table of CA data in the OpenSSL configuration file openssl.cnf.</dd>
+  <dt>
+    <a NAME="client-enroll.py">client-enroll.py</a>
+  </dt>
+  <dd>
+    Generate a certification request with your favourite
+    web browser.
+  </dd>
+  <dt>
+    <a NAME="cert-query.py">cert-query.py</a>
+  </dt>
+  <dd>
+    Query the OpenSSL certificate database for searching e-mail
+    certificates.
+  </dd>
+  <dt>
+    <a NAME="view-cert.py">view-cert.py</a>
+  </dt>
+  <dd>
+    Display a certificate or CRL.
+  </dd>
+  <dt>
+    <a NAME="get-cert.py">get-cert.py</a>
+  </dt>
+  <dd>
+    Load a certificate or CRL.
+  </dd>
+  <dt>
+    <a NAME="ns-check-rev.py">ns-check-rev.py</a>
+  </dt>
+  <dd>
+    On-line verification of a certificate
+  </dd>
+  <dt>
+    <a NAME="ns-revoke.py">ns-revoke.py</a>
+  </dt>
+  <dd>
+    Revoke a certificate with checking of client certificate.
+  </dd>
+  <dt>
+    <a NAME="scep.py">scep.py</a>
+  </dt>
+  <dd>
+    Experimental support for Cisco's
+    Simple Certificate Enrollment Protocol (SCEP)
+  </dd>
+</dl>
+
+
+<h2><a NAME="pylib">pylib/</a></h2>
+<p>
+misc. modules
+</p>
+
+<h2><a NAME="htdocs">htdocs/</a></h2>
+<p>
+</p>
+
+<!--#include file="ssi/footer.html"-->
