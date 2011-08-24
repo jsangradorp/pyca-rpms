@@ -66,4 +66,5 @@ doconfig:
 	sed -i -e 's,/usr/local,/var/lib/pyca,g' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,\(userWWWRun *= *\)wwwrun,\1apache,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,^#ErrorLog,ErrorLog,' ${INSTALLDIR}/etc/pyca/openssl.cnf
+	sed -i -e 's,@ms.inka.de,,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 
