@@ -1,0 +1,1 @@
+openssl ca -config /etc/pyca/openssl.cnf -name CA_AuthCerts -spkac /var/lib/pyca/myCA/AuthCerts/newreqs/cert-req-SPKAC.AuthCerts.3YPkMhwH4MRDKdVawXojSA\=\=.spkac -outdir /var/lib/pyca/myCA/AuthCerts/newcerts/
