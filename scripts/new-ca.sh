@@ -29,6 +29,8 @@ sed -i -e "s#^organization[ \\t]*=[ \\t]*.*#organization = \"$ORGANIZATION\"#g" 
 
 # Install fetchmail and set this $HOME/.fetchmailrc for caadmin user
 echo "poll $DIALOGUE_SERVER proto $DIALOGUE_PROTO user $DIALOGUE_USER password $DIALOGUE_PASS mda \"/usr/sbin/ca-certreq-mail.py --config /etc/pyca/openssl.cnf\" $DIALOGUE_SSL keep" > /home/caadmin/.fetchmailrc
+chown caadmin:caadmin /home/caadmin/.fetchmailrc
+chmod 0600 /home/caadmin/.fetchmailrc
 # Create the CAs based on the previous configuration
 /usr/sbin/ca-make.py --config=/etc/pyca/openssl.cnf
 # Next is because caadmin is the mail delivery agent daemon itself, so it wouldn't be allowed read access
