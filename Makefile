@@ -3,7 +3,7 @@ SOURCESDIR=./pyca-20031118
 INSTALLDIR=dest/pyca-root
 
 DIRS=/etc/pyca \
-     /etc/cron.hourly \
+     /etc/cron.d \
      /etc/httpd/conf.d \
      /usr/share/doc \
      /usr/bin \
@@ -59,8 +59,9 @@ doconfig:
 	# First apache config
 	echo 'ScriptAlias /pyca /usr/share/pyca' > ${INSTALLDIR}/etc/httpd/conf.d/pyca.conf
 	# Now cron config
-	echo "ca-cycle-priv.py --config=/etc/pyca/openssl.cnf" > ${INSTALLDIR}/etc/cron.hourly/pyca
-	echo "ca-cycle-pub.py --config=/etc/pyca/openssl.cnf" >> ${INSTALLDIR}/etc/cron.hourly/pyca
+	echo "5 * * * * caadmin /usr/sbin/ca-cycle-priv.py --config=/etc/pyca/openssl.cnf" > ${INSTALLDIR}/etc/cron.d/pyca
+	echo "9 * * * * caadmin /usr/sbin/ca-cycle-pub.py --config=/etc/pyca/openssl.cnf" >> ${INSTALLDIR}/etc/cron.d/pyca
+	echo "*/5 * * * * caadmin /usr/bin/fetchmail --syslog" >> ${INSTALLDIR}/etc/cron.d/pyca
 	# And fix pyca config itself
 	sed -i -e 's,/etc/openssl,/etc/pyca,g' ${INSTALLDIR}/usr/share/pyca/pycacnf.py
 	# next is to avoid a nasty warning
@@ -69,8 +70,11 @@ doconfig:
 	sed -i -e 's,/etc/openssl,/etc/pyca,g' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,/usr/local,/var/lib/pyca,g' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,\(userWWWRun *= *\)wwwrun,\1apache,' ${INSTALLDIR}/etc/pyca/openssl.cnf
-	sed -i -e 's,^#ErrorLog,ErrorLog,' ${INSTALLDIR}/etc/pyca/openssl.cnf
+	sed -i -e 's,\(userMailDaemon *= *\)daemon,\1caadmin,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,@ms.inka.de,,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e "s,cert.\(issuer\|subject\).get('Email',cert.\1.get('emailAddress'," ${INSTALLDIR}/usr/sbin/ca-cycle-pub.py
 	sed -i -e "s#'root@localhost'#pyca_section.get('caAdminMailAdr', '')#" ${INSTALLDIR}/usr/sbin/ca-cycle-pub.py
+	sed -i -e 's,^#emailAddress,emailAddress,' ${INSTALLDIR}/etc/pyca/openssl.cnf
+	sed -i -e '348isubjectAltName = email:copy' ${INSTALLDIR}/etc/pyca/openssl.cnf
+348
 
