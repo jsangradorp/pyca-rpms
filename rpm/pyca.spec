@@ -16,7 +16,7 @@ URL: http://www.pyca.de
 BuildRoot: %{cwd}/dest/%{name}-root
 BuildArch: noarch
 
-Requires: openssl httpd mod_ssl python fetchmail vixie-cron MTA
+Requires: openssl httpd mod_ssl python fetchmail vixie-cron exim
 
 %description
 Manage a CA with a web interface
@@ -103,5 +103,8 @@ mkdir -p /var/lib/pyca/
 mkdir -p /var/log/pyca/
 chown apache /var/lib/pyca
 chown caadmin /var/log/pyca
+chkconfig httpd on
+chkconfig exim on
+chkconfig crond on
 echo "Now you can run new-ca.sh script"
 
