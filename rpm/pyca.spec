@@ -16,7 +16,7 @@ URL: http://www.pyca.de
 BuildRoot: %{cwd}/dest/%{name}-root
 BuildArch: noarch
 
-Requires: openssl httpd python vixie-cron MTA
+Requires: openssl httpd mod_ssl python vixie-cron MTA
 
 %description
 Manage a CA with a web interface
@@ -30,7 +30,7 @@ make DESTDIR=%{pyca} INSTALLROOT=$RPM_BUILD_ROOT%{pyca} install
 %files
 %defattr(-,root,root)
 %config %{pyca}/etc/cron.hourly/pyca
-%config %{pyca}/etc/httpd/conf.d/pyca
+%config %{pyca}/etc/httpd/conf.d/pyca.conf
 %config %{pyca}/etc/pyca/cacert_AuthCerts.cnf
 %config %{pyca}/etc/pyca/cacert_CodeSigning.cnf
 %config %{pyca}/etc/pyca/cacert_EmailCerts.cnf
@@ -100,6 +100,8 @@ make DESTDIR=%{pyca} INSTALLROOT=$RPM_BUILD_ROOT%{pyca} install
 %post
 if ! grep -q caadmin: /etc/passwd ; then useradd -m caadmin ; else echo "User caadmin already exists. Skipping creation" ; fi
 mkdir -p /var/lib/pyca/
+mkdir -p /var/log/pyca/
 chown apache /var/lib/pyca
+chown apache /var/log/pyca
 echo "Now you can run new-ca.sh script"
 

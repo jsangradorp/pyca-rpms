@@ -12,6 +12,7 @@ DIRS=/etc/pyca \
      /usr/share/pyca \
      /usr/share/doc/pyca \
      /var/lib/pyca/certs \
+     /var/log/pyca \
 
 .PHONY: rpm
 rpm:
@@ -23,7 +24,7 @@ mkdirs:
 startinstalling:
 	echo 'Installing'
 
-install: startinstalling mkdirs copyfiles doconfig
+install: startinstalling mkdirs copyfiles doconfig cleanupsvn
 	@echo 'Done installing'
 
 startcopying:
@@ -51,9 +52,12 @@ copylib: mkdirs
 copyconf: mkdirs
 	cp -rf ${SOURCESDIR}/conf/* ${INSTALLDIR}/etc/pyca
 
+cleanupsvn:
+	find ${INSTALLDIR} -type d -name '.svn' | xargs rm -rf
+
 doconfig:
 	# First apache config
-	echo 'ScriptAlias /pyca /usr/share/pyca' > ${INSTALLDIR}/etc/httpd/conf.d/pyca
+	echo 'ScriptAlias /pyca /usr/share/pyca' > ${INSTALLDIR}/etc/httpd/conf.d/pyca.conf
 	# Now cron config
 	echo "ca-cycle-priv.py --config=/etc/pyca/openssl.cnf" > ${INSTALLDIR}/etc/cron.hourly/pyca
 	echo "ca-cycle-pub.py --config=/etc/pyca/openssl.cnf" >> ${INSTALLDIR}/etc/cron.hourly/pyca
@@ -67,4 +71,6 @@ doconfig:
 	sed -i -e 's,\(userWWWRun *= *\)wwwrun,\1apache,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,^#ErrorLog,ErrorLog,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e 's,@ms.inka.de,,' ${INSTALLDIR}/etc/pyca/openssl.cnf
+	sed -i -e "s,cert.\(issuer\|subject\).get('Email',cert.\1.get('emailAddress'," ${INSTALLDIR}/usr/sbin/ca-cycle-pub.py
+	sed -i -e "s#'root@localhost'#pyca_section.get('caAdminMailAdr', '')#" ${INSTALLDIR}/usr/sbin/ca-cycle-pub.py
 

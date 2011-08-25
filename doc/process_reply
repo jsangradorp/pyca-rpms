@@ -1,0 +1,2 @@
+/usr/sbin/ca-certreq-mail.py --config=/etc/pyca/openssl.cnf
+[paste e-mail reply headers]
