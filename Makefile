@@ -76,5 +76,4 @@ doconfig:
 	sed -i -e "s#'root@localhost'#pyca_section.get('caAdminMailAdr', '')#" ${INSTALLDIR}/usr/sbin/ca-cycle-pub.py
 	sed -i -e 's,^#emailAddress,emailAddress,' ${INSTALLDIR}/etc/pyca/openssl.cnf
 	sed -i -e '348isubjectAltName = email:copy' ${INSTALLDIR}/etc/pyca/openssl.cnf
-348
 
