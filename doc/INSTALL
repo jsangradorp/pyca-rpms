@@ -1,0 +1,43 @@
+You need:
+	- A CentOS 5.6 server.
+	- An IP address reachable from the Internet, with optionally DNS.
+	- An e-mail address to receive confirmations.
+	- An e-mail address for the CA administrator.
+
+Download the rpm.
+
+disable selinux (or be ready to configure it)
+yum install --nogpgcheck pyca-XXX.rpm
+
+run new-ca.sh . Answer the questions. Carefully.
+
+A total of 5 CAs will be created. A Root CA and 4 subCAs, namely:
+
+- AuthCerts
+- EmailCerts
+- ServerCerts
+- CodeSigning
+
+You need passwords for all of them. Sorry :-/
+
+----
+
+When this is set up, you can visit the URL in your browser,
+
+http://XXXXX/pyca/ca-index.py
+
+Request a Client Certificate ("client" link), fill the form and wait for the e-mail. Reply to it.
+
+----
+
+Now the administrator must intervent, because we don't want to sign certificates to anyone, do we?
+
+So log in as the administrator (caadmin) and run:
+
+openssl ca -config /etc/pyca/openssl.cnf -name CA_AuthCerts -spkac /var/lib/pyca/myCA/AuthCerts/newreqs/cert-req-SPKAC.AuthCerts.3YPkMhwH4MRDKdVawXojSA\=\=.spkac -outdir /var/lib/pyca/myCA/AuthCerts/newcerts/
+
+Changing the file name to the real one.
+
+
+Next time ca-cycle-pub.py is run as per crond, you will receive a link to your certificate.
+
