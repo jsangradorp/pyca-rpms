@@ -38,4 +38,4 @@ chmod u+r /var/lib/pyca/myCA/EmailCerts/newreqs \
 	/var/lib/pyca/myCA/ServerCerts/newreqs \
 	/var/lib/pyca/myCA/CodeSigning/newreqs \
 	/var/lib/pyca/myCA/AuthCerts/newreqs
-
+su -c "/usr/sbin/ca-cycle-priv.py --config /etc/pyca/openssl.cnf" caadmin
